@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>परिवार सर्वेक्षण प्रपत्र - समग्र शिक्षा उत्तर प्रदेश</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 6mm 6mm 6mm 6mm;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, 'Noto Sans Devanagari', Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-size: 10.5px;
+  }
+
+  .no-print {
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  }
+  .nav-back {
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .btn-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .btn {
+    padding: 6px 14px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-add { background-color: #16a34a; }
+  .btn-save { background-color: #1e3a8a; }
+  .btn-export { background-color: #0284c7; }
+  .btn-print { background-color: #334155; }
+  .btn-reset { background-color: #dc2626; }
+  .btn-del {
+    background-color: #ef4444;
+    padding: 2px 6px;
+    font-size: 10px;
+    border-radius: 3px;
+  }
+
+  .sheet {
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.06);
+    min-width: 1020px;
+    margin: 0 auto;
+  }
+
+  .header-block {
+    text-align: center;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .header-block h2 {
+    margin: 0 0 3px 0;
+    font-size: 15px;
+    color: #1e3a8a;
+  }
+  .header-block p {
+    margin: 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  /* भौगोलिक एवं प्रशासनिक विवरण ग्रिड */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px 12px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+  }
+  .meta-item label {
+    flex-shrink: 0;
+    color: #334155;
+  }
+  .meta-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.2px dotted #475569;
+    background: transparent;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1e3a8a;
+    outline: none;
+    padding: 1px 3px;
+    text-align: center;
+  }
+  .meta-input:focus {
+    background-color: #e0f2fe;
+    border-bottom: 1.5px solid #0284c7;
+  }
+
+  .section-header {
+    background: #1e3a8a;
+    color: #ffffff;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 10px 0 4px 0;
+    border-radius: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* सेक्शन 1: परिवार के मुखिया की जानकारी ग्रिड */
+  .head-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    border: 1px solid #334155;
+    padding: 8px 10px;
+    background: #fafafa;
+    margin-bottom: 8px;
+  }
+  .head-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .head-field label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #334155;
+  }
+  .head-field input, .head-field select {
+    border: 1px solid #cbd5e1;
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 10.5px;
+    font-family: inherit;
+    background: #fff;
+    outline: none;
+    font-weight: 600;
+  }
+  .head-field input:focus, .head-field select:focus {
+    border-color: #0284c7;
+    background-color: #f0f7ff;
+  }
+
+  /* टेबल्स */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-bottom: 6px;
+  }
+  th, td {
+    border: 1px solid #334155;
+    padding: 3px 2px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 9.5px;
+    line-height: 1.15;
+    word-break: break-word;
+  }
+  th {
+    background-color: #f1f5f9;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  input.tbl-in, select.tbl-in {
+    width: 98%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: inherit;
+    font-size: 9.5px;
+    padding: 1px 0;
+    outline: none;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  input.tbl-in:focus, select.tbl-in:focus {
+    background-color: #e0f2fe;
+  }
+
+  .oosc-alert {
+    background-color: #fee2e2 !important;
+    color: #b91c1c !important;
+    font-weight: bold !important;
+  }
+
+  /* घोषणा व हस्ताक्षर */
+  .declaration-box {
+    margin-top: 10px;
+    border: 1px solid #334155;
+    padding: 6px 10px;
+    font-size: 9.5px;
+    line-height: 1.35;
+    background: #f8fafc;
+  }
+  .signatures-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 25px;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: bold;
+    gap: 15px;
+  }
+
+  @media print {
+    body { background: #ffffff; padding: 0; }
+    .no-print, .action-col { display: none !important; }
+    .sheet { box-shadow: none; padding: 0; min-width: 100%; }
+    .meta-input { border-bottom: none !important; color: #000 !important; }
+    .head-field input, .head-field select { border: none; border-bottom: 1px solid #000; padding: 0; border-radius: 0; }
+    input.tbl-in, select.tbl-in { border: none; background: transparent; }
+    th { background-color: #f1f5f9 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <a href="../index.html" class="nav-back">&larr; मुख्य डैशबोर्ड</a>
+  <div class="btn-group">
+    <button class="btn btn-save" onclick="saveSurveyData()">💾 डेटा सुरक्षित करें</button>
+    <button class="btn btn-export" onclick="exportSurveyCSV()">📊 Excel Export</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ A4 Landscape प्रिंट / PDF</button>
+    <button class="btn btn-reset" onclick="resetSurveyForm()">🔄 रीसेट</button>
+  </div>
+</div>
+
+<div class="sheet">
+  <div class="header-block">
+    <h2>समग्र शिक्षा उत्तर प्रदेश - परिवार सर्वेक्षण प्रपत्र (आउट ऑफ स्कूल बच्चों का चिन्हांकन)</h2>
+    <p>जनपद: मुजफ्फरनगर | विकास क्षेत्र: बघरा | न्याय पंचायत: जसोई | ग्राम पंचायत: धौलरी</p>
+  </div>
+
+  <!-- भौगोलिक एवं प्रशासनिक विवरण -->
+  <div class="meta-grid">
+    <div class="meta-item"><label>जनपद:</label><input type="text" id="metaDistrict" class="meta-input" value="मुजफ्फरनगर"></div>
+    <div class="meta-item"><label>ब्लॉक:</label><input type="text" id="metaBlock" class="meta-input" value="बघरा"></div>
+    <div class="meta-item"><label>न्याय पंचायत:</label><input type="text" id="metaNyay" class="meta-input" value="जसोई"></div>
+    <div class="meta-item"><label>ग्राम पंचायत:</label><input type="text" id="metaGram" class="meta-input" value="धौलरी"></div>
+    <div class="meta-item"><label>मजरा / वार्ड का नाम:</label><input type="text" id="metaMajra" class="meta-input" placeholder="मजरा / मोहल्ला"></div>
+    <div class="meta-item"><label>सर्वेक्षक का नाम व पद:</label><input type="text" id="metaSurveyor" class="meta-input" placeholder="अध्यापक / शिक्षामित्र"></div>
+    <div class="meta-item"><label>सर्वेक्षक का मोबाइल नं०:</label><input type="tel" id="metaMobile" class="meta-input" maxlength="10" placeholder="10 अंक"></div>
+    <div class="meta-item"><label>सर्वेक्षण दिनांक:</label><input type="text" id="metaDate" class="meta-input" placeholder="DD-MM-YYYY"></div>
+  </div>
+
+  <!-- 1. परिवार के मुखिया की जानकारी -->
+  <div class="section-header">
+    <span>1. परिवार के मुखिया की जानकारी</span>
+    <span style="font-size: 9.5px; font-weight: normal;">(घर के मुख्य अभिभावक का विवरण)</span>
+  </div>
+  <div class="head-grid">
+    <div class="head-field">
+      <label>राशन कार्ड नंबर:</label>
+      <input type="text" id="headRation" placeholder="राशन कार्ड सं०">
+    </div>
+    <div class="head-field">
+      <label>परिवार के मुखिया का नाम:</label>
+      <input type="text" id="headName" placeholder="मुखिया का नाम" required>
+    </div>
+    <div class="head-field">
+      <label>आयु (वर्ष):</label>
+      <input type="number" id="headAge" min="18" placeholder="उदा. 45">
+    </div>
+    <div class="head-field">
+      <label>लिंग:</label>
+      <select id="headGender">
+        <option value="पुरुष">पुरुष</option>
+        <option value="महिला">महिला</option>
+        <option value="अन्य">अन्य</option>
+      </select>
+    </div>
+    <div class="head-field">
+      <label>धर्म:</label>
+      <select id="headReligion">
+        <option value="हिंदू">हिंदू</option>
+        <option value="मुस्लिम">मुस्लिम</option>
+        <option value="सिख">सिख</option>
+        <option value="ईसाई">ईसाई</option>
+        <option value="अन्य">अन्य</option>
+      </select>
+    </div>
+    <div class="head-field">
+      <label>वैवाहिक स्थिति:</label>
+      <select id="headMarital">
+        <option value="विवाहित">विवाहित</option>
+        <option value="अविवाहित">अविवाहित</option>
+        <option value="विधवा / विधुर">विधवा / विधुर</option>
+        <option value="तलाकशुदा">तलाकशुदा</option>
+      </select>
+    </div>
+    <div class="head-field">
+      <label>सामाजिक वर्ग (Category):</label>
+      <select id="headCategory">
+        <option value="सामान्य">सामान्य (General)</option>
+        <option value="अन्य पिछड़ा वर्ग">अन्य पिछड़ा वर्ग (OBC)</option>
+        <option value="अनुसूचित जाति">अनुसूचित जाति (SC)</option>
+        <option value="अनुसूचित जनजाति">अनुसूचित जनजाति (ST)</option>
+      </select>
+    </div>
+    <div class="head-field">
+      <label>शैक्षिक योग्यता:</label>
+      <select id="headEdu">
+        <option value="निरक्षर">निरक्षर</option>
+        <option value="प्राथमिक (1-5)">प्राथमिक (1-5)</option>
+        <option value="उच्च प्राथमिक (6-8)">उच्च प्राथमिक (6-8)</option>
+        <option value="माध्यमिक (9-10)">माध्यमिक (9-10)</option>
+        <option value="इण्टरमीडिएट (11-12)">इण्टरमीडिएट (11-12)</option>
+        <option value="स्नातक व उच्च">स्नातक व उच्च</option>
+      </select>
+    </div>
+    <div class="head-field">
+      <label>व्यवसाय:</label>
+      <select id="headOcc">
+        <option value="कृषि">कृषि</option>
+        <option value="मजदूरी">मजदूरी</option>
+        <option value="व्यापार/दुकान">व्यापार / दुकान</option>
+        <option value="निजी सेवा">निजी सेवा</option>
+        <option value="सरकारी सेवा">सरकारी सेवा</option>
+        <option value="गृहणी">गृहणी</option>
+        <option value="अन्य">अन्य</option>
+      </select>
+    </div>
+    <div class="head-field">
+      <label>परिवार की अनुमानित वार्षिक आय (₹):</label>
+      <input type="number" id="headIncome" placeholder="वार्षिक आय">
+    </div>
+    <div class="head-field">
+      <label>मोबाइल नंबर:</label>
+      <input type="tel" id="headMobile" maxlength="10" placeholder="10 अंकीय नंबर">
+    </div>
+    <div class="head-field">
+      <label>घर का स्वामित्व:</label>
+      <select id="headOwnership">
+        <option value="निजी (स्वयं का)">निजी (स्वयं का)</option>
+        <option value="किराए का">किराए का</option>
+        <option value="अन्य / बेघर">अन्य / बेघर</option>
+      </select>
+    </div>
+    <div class="head-field">
+      <label>राशन कार्ड श्रेणी:</label>
+      <select id="headCardType">
+        <option value="एपीएल (APL)">एपीएल (APL)</option>
+        <option value="बीपीएल (BPL)">बीपीएल (BPL)</option>
+        <option value="अंत्योदय (AAY)">अंत्योदय (AAY)</option>
+        <option value="कार्ड नहीं">कार्ड नहीं</option>
+      </select>
+    </div>
+    <div class="head-field" style="grid-column: span 3;">
+      <label>पूर्ण पता / मकान संख्या:</label>
+      <input type="text" id="headAddress" value="ग्राम धौलरी, पोस्ट बघरा, मुजफ्फरनगर" placeholder="मकान नं०, मोहल्ला, पता">
+    </div>
+  </div>
+
+  <!-- 2. परिवार के सदस्यों का विवरण (14 वर्ष से अधिक) -->
+  <div class="section-header">
+    <span>2. परिवार के सदस्यों का विवरण (जिनकी उम्र 14 वर्ष से अधिक हो)</span>
+    <button type="button" class="btn btn-add no-print" onclick="addMemberRow()">+ सदस्य जोड़ें</button>
+  </div>
+  <table id="tblMembers">
+    <thead>
+      <tr>
+        <th style="width: 4%;">क्र०सं०</th>
+        <th style="width: 17%;">सदस्य का नाम</th>
+        <th style="width: 7%;">आयु</th>
+        <th style="width: 8%;">लिंग</th>
+        <th style="width: 12%;">मोबाइल नंबर</th>
+        <th style="width: 11%;">वैवाहिक स्थिति</th>
+        <th style="width: 14%;">शैक्षिक योग्यता</th>
+        <th style="width: 12%;">व्यवसाय</th>
+        <th style="width: 12%;">मुखिया से संबंध</th>
+        <th style="width: 3%;" class="action-col no-print">-</th>
+      </tr>
+    </thead>
+    <tbody id="memberBody">
+      <!-- पंक्तियां डायनामिक रूप से लोड होंगी -->
+    </tbody>
+  </table>
+
+  <!-- 3. बच्चों का विवरण (0 से 14 वर्ष) -->
+  <div class="section-header">
+    <span>3. बच्चों का विवरण (जिनकी उम्र 0 से 14 वर्ष हो - आउट ऑफ स्कूल चिन्हांकन)</span>
+    <button type="button" class="btn btn-add no-print" onclick="addChildRow()">+ बच्चा जोड़ें</button>
+  </div>
+  <table id="tblChildren">
+    <thead>
+      <tr>
+        <th style="width: 3%;">क्र०</th>
+        <th style="width: 11%;">बच्चे का नाम</th>
+        <th style="width: 5%;">आयु</th>
+        <th style="width: 6%;">लिंग</th>
+        <th style="width: 10%;">पिता का नाम</th>
+        <th style="width: 10%;">माता का नाम</th>
+        <th style="width: 8%;">मुखिया से संबंध</th>
+        <th style="width: 8%;">विद्यालय में नामांकित?</th>
+        <th style="width: 6%;">यदि हां तो कक्षा</th>
+        <th style="width: 10%;">U-DISE / आंगनबाड़ी कोड</th>
+        <th style="width: 13%;">विद्यालय / आंगनबाड़ी का नाम</th>
+        <th style="width: 10%;">आउट ऑफ स्कूल (OoSC) स्थिति</th>
+        <th style="width: 3%;" class="action-col no-print">-</th>
+      </tr>
+    </thead>
+    <tbody id="childBody">
+      <!-- पंक्तियां डायनामिक रूप से लोड होंगी -->
+    </tbody>
+  </table>
+
+  <!-- घोषणा एवं हस्ताक्षर ब्लॉक -->
+  <div class="declaration-box">
+    <strong>घोषणा:</strong> प्रमाणित किया जाता है कि मेरे द्वारा उक्त परिवार के भौतिक सत्यापनोपरांत उपरोक्त विवरण अंकित किया गया है। 0 से 14 वर्ष आयु वर्ग के समस्त बच्चों के नामांकन/आउट ऑफ स्कूल स्थिति की भली-भाँति जांच कर ली गयी है।
+  </div>
+
+  <div class="signatures-grid">
+    <div>
+      <br><br>
+      हस्ताक्षर / अंगूठा निशान<br>
+      <strong>परिवार का मुखिया / अभिभावक</strong>
+    </div>
+    <div>
+      <br><br>
+      हस्ताक्षर एवं पदनाम<br>
+      <strong>सर्वेक्षक (शिक्षक / शिक्षामित्र)</strong><br>
+      प्राथमिक विद्यालय धौलरी
+    </div>
+    <div>
+      <br><br>
+      हस्ताक्षर एवं मुहर<br>
+      <strong>प्रधानाध्यापक / संकुल नोडल</strong><br>
+      प्राथमिक विद्यालय धौलरी, बघरा
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'parivar_sarvekshan_dholari';
+
+  // 1. सदस्य पंक्ति जोड़ना (> 14 वर्ष)
+  function addMemberRow(data = {}) {
+    const tbody = document.getElementById('memberBody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="m-idx"></td>
+      <td><input type="text" class="tbl-in m-name" value="${data.name || ''}" placeholder="सदस्य का नाम"></td>
+      <td><input type="number" class="tbl-in m-age" value="${data.age || ''}" min="15" placeholder="आयु"></td>
+      <td>
+        <select class="tbl-in m-gender">
+          <option value="पुरुष" ${data.gender === 'पुरुष' ? 'selected' : ''}>पुरुष</option>
+          <option value="महिला" ${data.gender === 'महिला' ? 'selected' : ''}>महिला</option>
+          <option value="अन्य" ${data.gender === 'अन्य' ? 'selected' : ''}>अन्य</option>
+        </select>
+      </td>
+      <td><input type="tel" class="tbl-in m-mob" value="${data.mob || ''}" maxlength="10" placeholder="मोबाइल"></td>
+      <td>
+        <select class="tbl-in m-mar">
+          <option value="विवाहित" ${data.mar === 'विवाहित' ? 'selected' : ''}>विवाहित</option>
+          <option value="अविवाहित" ${data.mar === 'अविवाहित' ? 'selected' : ''}>अविवाहित</option>
+          <option value="विधवा/विधुर" ${data.mar === 'विधवा/विधुर' ? 'selected' : ''}>विधवा/विधुर</option>
+        </select>
+      </td>
+      <td>
+        <select class="tbl-in m-edu">
+          <option value="निरक्षर" ${data.edu === 'निरक्षर' ? 'selected' : ''}>निरक्षर</option>
+          <option value="प्राथमिक" ${data.edu === 'प्राथमिक' ? 'selected' : ''}>प्राथमिक</option>
+          <option value="उच्च प्राथमिक" ${data.edu === 'उच्च प्राथमिक' ? 'selected' : ''}>उच्च प्राथमिक</option>
+          <option value="माध्यमिक" ${data.edu === 'माध्यमिक' ? 'selected' : ''}>माध्यमिक</option>
+          <option value="इण्टर" ${data.edu === 'इण्टर' ? 'selected' : ''}>इण्टर</option>
+          <option value="स्नातक+" ${data.edu === 'स्नातक+' ? 'selected' : ''}>स्नातक+</option>
+        </select>
+      </td>
+      <td><input type="text" class="tbl-in m-occ" value="${data.occ || ''}" placeholder="व्यवसाय"></td>
+      <td><input type="text" class="tbl-in m-rel" value="${data.rel || ''}" placeholder="उदा. पत्नी/पुत्र"></td>
+      <td class="action-col no-print"><button type="button" class="btn btn-del" onclick="deleteRow(this)">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    reindexMembers();
+  }
+
+  function reindexMembers() {
+    document.querySelectorAll('#memberBody tr').forEach((tr, i) => {
+      tr.querySelector('.m-idx').innerText = i + 1;
+    });
+  }
+
+  // 2. बच्चा पंक्ति जोड़ना (0-14 वर्ष)
+  function addChildRow(data = {}) {
+    const tbody = document.getElementById('childBody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="c-idx"></td>
+      <td><input type="text" class="tbl-in c-name" value="${data.name || ''}" placeholder="बच्चे का नाम"></td>
+      <td><input type="number" class="tbl-in c-age" value="${data.age || ''}" min="0" max="14" placeholder="आयु" oninput="checkChildStatus(this)"></td>
+      <td>
+        <select class="tbl-in c-gender">
+          <option value="बालक" ${data.gender === 'बालक' ? 'selected' : ''}>बालक</option>
+          <option value="बालिका" ${data.gender === 'बालिका' ? 'selected' : ''}>बालिका</option>
+        </select>
+      </td>
+      <td><input type="text" class="tbl-in c-fname" value="${data.fname || ''}" placeholder="पिता का नाम"></td>
+      <td><input type="text" class="tbl-in c-mname" value="${data.mname || ''}" placeholder="माता का नाम"></td>
+      <td><input type="text" class="tbl-in c-rel" value="${data.rel || 'पुत्र'}" placeholder="संबंध"></td>
+      <td>
+        <select class="tbl-in c-enrolled" onchange="checkChildStatus(this)">
+          <option value="हाँ" ${data.enrolled === 'हाँ' ? 'selected' : ''}>हाँ</option>
+          <option value="नहीं" ${data.enrolled === 'नहीं' ? 'selected' : ''}>नहीं</option>
+        </select>
+      </td>
+      <td><input type="text" class="tbl-in c-class" value="${data.cls || ''}" placeholder="कक्षा"></td>
+      <td><input type="text" class="tbl-in c-udise" value="${data.udise || '09020201501'}" placeholder="U-DISE / कोड"></td>
+      <td><input type="text" class="tbl-in c-school" value="${data.school || 'प्रा० वि० धौलरी'}" placeholder="विद्यालय का नाम"></td>
+      <td><input type="text" class="tbl-in c-oosc" value="${data.oosc || '-'}" readonly></td>
+      <td class="action-col no-print"><button type="button" class="btn btn-del" onclick="deleteRow(this)">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    reindexChildren();
+    checkChildStatus(tr.querySelector('.c-enrolled'));
+  }
+
+  function reindexChildren() {
+    document.querySelectorAll('#childBody tr').forEach((tr, i) => {
+      tr.querySelector('.c-idx').innerText = i + 1;
+    });
+  }
+
+  function deleteRow(btn) {
+    const row = btn.closest('tr');
+    row.remove();
+    reindexMembers();
+    reindexChildren();
+  }
+
+  // 3. आउट ऑफ स्कूल स्थिति की स्वचालित जांच
+  function checkChildStatus(el) {
+    const tr = el.closest('tr');
+    const age = parseFloat(tr.querySelector('.c-age').value) || 0;
+    const enrolled = tr.querySelector('.c-enrolled').value;
+    const ooscBox = tr.querySelector('.c-oosc');
+
+    if (enrolled === 'नहीं') {
+      if (age >= 7 && age <= 14) {
+        ooscBox.value = 'संलग्नक 2 भरें (OoSC)';
+        ooscBox.className = 'tbl-in c-oosc oosc-alert';
+      } else if (age < 6) {
+        ooscBox.value = 'आंगनबाड़ी योग्य';
+        ooscBox.className = 'tbl-in c-oosc';
+      } else {
+        ooscBox.value = 'ड्रापआउट / अनामांकित';
+        ooscBox.className = 'tbl-in c-oosc oosc-alert';
+      }
+    } else {
+      ooscBox.value = 'नामांकित (सामान्य)';
+      ooscBox.className = 'tbl-in c-oosc';
+    }
+  }
+
+  // 4. समस्त डेटा LocalStorage में सुरक्षित करना
+  function saveSurveyData() {
+    const meta = {
+      district: document.getElementById('metaDistrict').value,
+      block: document.getElementById('metaBlock').value,
+      nyay: document.getElementById('metaNyay').value,
+      gram: document.getElementById('metaGram').value,
+      majra: document.getElementById('metaMajra').value,
+      surveyor: document.getElementById('metaSurveyor').value,
+      mobile: document.getElementById('metaMobile').value,
+      date: document.getElementById('metaDate').value
+    };
+
+    const head = {
+      ration: document.getElementById('headRation').value,
+      name: document.getElementById('headName').value,
+      age: document.getElementById('headAge').value,
+      gender: document.getElementById('headGender').value,
+      religion: document.getElementById('headReligion').value,
+      marital: document.getElementById('headMarital').value,
+      category: document.getElementById('headCategory').value,
+      edu: document.getElementById('headEdu').value,
+      occ: document.getElementById('headOcc').value,
+      income: document.getElementById('headIncome').value,
+      mobile: document.getElementById('headMobile').value,
+      ownership: document.getElementById('headOwnership').value,
+      cardType: document.getElementById('headCardType').value,
+      address: document.getElementById('headAddress').value
+    };
+
+    const members = [];
+    document.querySelectorAll('#memberBody tr').forEach(r => {
+      members.push({
+        name: r.querySelector('.m-name').value,
+        age: r.querySelector('.m-age').value,
+        gender: r.querySelector('.m-gender').value,
+        mob: r.querySelector('.m-mob').value,
+        mar: r.querySelector('.m-mar').value,
+        edu: r.querySelector('.m-edu').value,
+        occ: r.querySelector('.m-occ').value,
+        rel: r.querySelector('.m-rel').value
+      });
+    });
+
+    const children = [];
+    document.querySelectorAll('#childBody tr').forEach(r => {
+      children.push({
+        name: r.querySelector('.c-name').value,
+        age: r.querySelector('.c-age').value,
+        gender: r.querySelector('.c-gender').value,
+        fname: r.querySelector('.c-fname').value,
+        mname: r.querySelector('.c-mname').value,
+        rel: r.querySelector('.c-rel').value,
+        enrolled: r.querySelector('.c-enrolled').value,
+        cls: r.querySelector('.c-class').value,
+        udise: r.querySelector('.c-udise').value,
+        school: r.querySelector('.c-school').value,
+        oosc: r.querySelector('.c-oosc').value
+      });
+    });
+
+    const fullPayload = { meta, head, members, children };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fullPayload));
+    alert('परिवार सर्वेक्षण का समस्त विवरण सफलतापूर्वक सुरक्षित कर लिया गया है!');
+  }
+
+  // 5. CSV/Excel Export (UTF-8 BOM सपोर्ट)
+  function exportSurveyCSV() {
+    const headName = document.getElementById('headName').value || 'परिवार';
+    let csv = `समग्र शिक्षा परिवार सर्वेक्षण प्रपत्र - ${headName}\n\n`;
+
+    csv += "1. परिवार के मुखिया की जानकारी\n";
+    csv += "राशन कार्ड,मुखिया का नाम,आयु,लिंग,धर्म,वैवाहिक स्थिति,वर्ग,शैक्षिक योग्यता,व्यवसाय,वार्षिक आय,मोबाइल,घर का स्वामित्व,कार्ड प्रकार,पूर्ण पता\n";
+    csv += `"${document.getElementById('headRation').value}","${document.getElementById('headName').value}","${document.getElementById('headAge').value}","${document.getElementById('headGender').value}","${document.getElementById('headReligion').value}","${document.getElementById('headMarital').value}","${document.getElementById('headCategory').value}","${document.getElementById('headEdu').value}","${document.getElementById('headOcc').value}","${document.getElementById('headIncome').value}","${document.getElementById('headMobile').value}","${document.getElementById('headOwnership').value}","${document.getElementById('headCardType').value}","${document.getElementById('headAddress').value}"\n\n`;
+
+    csv += "2. परिवार के सदस्य (14 वर्ष से अधिक)\n";
+    csv += "क.सं.,सदस्य का नाम,आयु,लिंग,मोबाइल,वैवाहिक स्थिति,शैक्षिक योग्यता,व्यवसाय,मुखिया से संबंध\n";
+    document.querySelectorAll('#memberBody tr').forEach((r, idx) => {
+      csv += `${idx + 1},"${r.querySelector('.m-name').value}","${r.querySelector('.m-age').value}","${r.querySelector('.m-gender').value}","${r.querySelector('.m-mob').value}","${r.querySelector('.m-mar').value}","${r.querySelector('.m-edu').value}","${r.querySelector('.m-occ').value}","${r.querySelector('.m-rel').value}"\n`;
+    });
+
+    csv += "\n3. बच्चों का विवरण (0 से 14 वर्ष)\n";
+    csv += "क.सं.,बच्चे का नाम,आयु,लिंग,पिता का नाम,माता का नाम,मुखिया से संबंध,नामांकित?,कक्षा,U-DISE कोड,विद्यालय/आंगनबाड़ी का नाम,आउट ऑफ स्कूल स्थिति\n";
+    document.querySelectorAll('#childBody tr').forEach((r, idx) => {
+      csv += `${idx + 1},"${r.querySelector('.c-name').value}","${r.querySelector('.c-age').value}","${r.querySelector('.c-gender').value}","${r.querySelector('.c-fname').value}","${r.querySelector('.c-mname').value}","${r.querySelector('.c-rel').value}","${r.querySelector('.c-enrolled').value}","${r.querySelector('.c-class').value}","${r.querySelector('.c-udise').value}","${r.querySelector('.c-school').value}","${r.querySelector('.c-oosc').value}"\n`;
+    });
+
+    const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `Family_Survey_${headName.replace(/\s+/g, '_')}.csv`;
+    link.click();
+  }
+
+  function resetSurveyForm() {
+    if(confirm('क्या आप सर्वेक्षण फॉर्म का डेटा खाली करना चाहते हैं?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+  }
+
+  // 6. पेज लोड होने पर डेटा पुनर्प्राप्ति
+  window.onload = function() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        if (data.meta) {
+          for (let k in data.meta) {
+            const el = document.getElementById('meta' + k.charAt(0).toUpperCase() + k.slice(1));
+            if (el) el.value = data.meta[k];
+          }
+        }
+        if (data.head) {
+          for (let k in data.head) {
+            const el = document.getElementById('head' + k.charAt(0).toUpperCase() + k.slice(1));
+            if (el) el.value = data.head[k];
+          }
+        }
+        if (data.members && data.members.length > 0) {
+          data.members.forEach(m => addMemberRow(m));
+        } else {
+          addMemberRow();
+          addMemberRow();
+        }
+        if (data.children && data.children.length > 0) {
+          data.children.forEach(c => addChildRow(c));
+        } else {
+          addChildRow();
+        }
+        return;
+      } catch (e) {}
+    }
+
+    // डिफ़ॉल्ट पंक्तियां
+    addMemberRow();
+    addMemberRow();
+    addChildRow();
+  };
+</script>
+
+</body>
+</html>
