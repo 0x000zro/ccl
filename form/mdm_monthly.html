@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>मिड-डे-मील मासिक प्रपत्र - P.S. Dhoulari</title>
+<title>पी०एम० पोषण योजान्तर्गत मिड-डे-मील मासिक उपभोग प्रमाण पत्र</title>
 <style>
   @page {
     size: A4 landscape;
-    margin: 6mm;
+    margin: 5mm;
   }
   * {
     box-sizing: border-box;
@@ -17,27 +17,27 @@
   body {
     font-family: 'Segoe UI', Tahoma, 'Noto Sans Devanagari', Arial, sans-serif;
     margin: 0;
-    padding: 10px;
+    padding: 8px;
     background-color: #f1f5f9;
     color: #0f172a;
-    font-size: 11px;
+    font-size: 10.5px;
   }
 
   .no-print {
     background: #ffffff;
-    padding: 10px 16px;
-    border-radius: 8px;
-    margin-bottom: 12px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
   }
   .nav-back {
     color: #1e3a8a;
     text-decoration: none;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12.5px;
   }
   .btn-group {
     display: flex;
@@ -45,8 +45,8 @@
     align-items: center;
   }
   .btn {
-    padding: 6px 14px;
-    font-size: 12px;
+    padding: 5px 12px;
+    font-size: 11.5px;
     font-weight: 600;
     cursor: pointer;
     color: white;
@@ -63,60 +63,85 @@
 
   .sheet {
     background: #ffffff;
-    padding: 14px 18px;
-    border-radius: 6px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.06);
-    min-width: 1000px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.06);
+    min-width: 1020px;
     margin: 0 auto;
   }
 
-  .header-title {
+  .header-block {
     text-align: center;
-    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .header-block h2 {
+    margin: 0 0 4px 0;
+    font-size: 15px;
     font-weight: 800;
     color: #1e3a8a;
-    margin-bottom: 8px;
     text-decoration: underline;
   }
 
-  .meta-grid {
+  .meta-top-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px 12px;
+    grid-template-columns: 2fr 1.2fr 1fr 1fr;
+    gap: 6px 12px;
     background: #f8fafc;
     border: 1px solid #cbd5e1;
     border-radius: 4px;
-    padding: 8px 12px;
-    margin-bottom: 10px;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    font-size: 11px;
     font-weight: 600;
   }
   .meta-item {
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 11.5px;
   }
   .meta-input {
-    width: 100%;
     border: none;
     border-bottom: 1.2px dotted #475569;
     background: transparent;
     font-family: inherit;
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
     color: #1e3a8a;
     outline: none;
     padding: 1px 3px;
     text-align: center;
+    flex: 1;
+  }
+
+  .days-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    background: #ffffff;
+    border: 1px solid #94a3b8;
+    padding: 4px 8px;
+    font-size: 10.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .days-bar input {
+    border: none;
+    border-bottom: 1.2px solid #000;
+    background: transparent;
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    padding: 0 4px;
   }
 
   .section-label {
     background: #1e3a8a;
     color: #ffffff;
-    padding: 3px 8px;
-    font-size: 11.5px;
+    padding: 2.5px 6px;
+    font-size: 10.5px;
     font-weight: 700;
-    margin: 8px 0 4px 0;
+    margin: 6px 0 2px 0;
     border-radius: 2px;
     display: flex;
     justify-content: space-between;
@@ -131,14 +156,15 @@
   }
   th, td {
     border: 1px solid #334155;
-    padding: 3px 2px;
+    padding: 2px 1px;
     text-align: center;
     vertical-align: middle;
-    font-size: 10px;
+    font-size: 9.5px;
     line-height: 1.15;
   }
   th { background-color: #f1f5f9; font-weight: 700; color: #0f172a; }
   .bg-sub { background-color: #e2e8f0; font-weight: bold; }
+  .bg-tot { background-color: #fef9c3; font-weight: bold; }
 
   input.tbl-in {
     width: 98%;
@@ -146,67 +172,58 @@
     background: transparent;
     text-align: center;
     font-family: inherit;
-    font-size: 10.5px;
-    padding: 2px 0;
+    font-size: 10px;
+    padding: 1px 0;
     outline: none;
     font-weight: 600;
     color: #0f172a;
-    transition: background-color 0.2s, border 0.2s;
   }
   input.tbl-in:focus { background-color: #e0f2fe; }
 
-  /* सत्यापन शैलियाँ (Validation Styles) */
+  /* त्रुटि व सफलता बॉर्डर */
   .box-error {
     background-color: #fee2e2 !important;
     border: 1.5px solid #dc2626 !important;
     color: #b91c1c !important;
-    border-radius: 3px;
+    font-weight: bold;
+    border-radius: 2px;
   }
   .box-valid {
     background-color: #f0fdf4 !important;
     border: 1px solid #16a34a !important;
     color: #15803d !important;
-    border-radius: 3px;
+    border-radius: 2px;
   }
   .neg-val { color: #dc2626 !important; font-weight: bold; }
   .pos-val { color: #15803d !important; font-weight: bold; }
 
-  .status-badge {
-    font-size: 9.5px;
-    padding: 1px 6px;
-    border-radius: 3px;
+  .status-tag {
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 2px;
     font-weight: bold;
   }
-  .badge-danger { background: #fef2f2; color: #dc2626; border: 1px solid #f87171; }
-  .badge-success { background: #f0fdf4; color: #16a34a; border: 1px solid #86efac; }
-
-  .declaration-box {
-    margin-top: 8px;
-    border: 1px solid #334155;
-    padding: 6px 10px;
-    font-size: 10px;
-    line-height: 1.35;
-    background: #fafafa;
-  }
+  .tag-danger { background: #fee2e2; color: #dc2626; border: 1px solid #f87171; }
+  .tag-success { background: #f0fdf4; color: #16a34a; border: 1px solid #86efac; }
 
   .signatures-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-top: 25px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 18px;
     text-align: center;
     font-size: 10.5px;
     font-weight: bold;
-    gap: 15px;
   }
 
   @media print {
     body { background: #ffffff; padding: 0; }
     .no-print { display: none !important; }
     .sheet { box-shadow: none; padding: 0; min-width: 100%; }
-    .meta-input { border-bottom: none !important; color: #000 !important; }
+    .meta-input, .days-bar input { border-bottom: none !important; color: #000 !important; }
     input.tbl-in { border: none; background: transparent; }
     .box-error { border: 1px solid #dc2626 !important; background: transparent !important; }
     .box-valid { border: none !important; background: transparent !important; }
+    th { background-color: #f1f5f9 !important; }
   }
 </style>
 </head>
@@ -215,195 +232,261 @@
 <div class="no-print">
   <a href="../index.html" class="nav-back">&larr; मुख्य डैशबोर्ड</a>
   <div class="btn-group">
-    <button class="btn btn-calc" onclick="runCompleteCalculation(true)">⚡ सम्पूर्ण गणना व जांच</button>
-    <button class="btn btn-save" onclick="saveMonthlyData()">💾 डेटा सुरक्षित करें</button>
-    <button class="btn btn-export" onclick="exportMonthlyCSV()">📊 Excel Export</button>
+    <button class="btn btn-calc" onclick="calculateAllSections(true)">⚡ सम्पूर्ण गणना व जांच</button>
+    <button class="btn btn-save" onclick="saveAllMonthlyData()">💾 डेटा सुरक्षित करें</button>
+    <button class="btn btn-export" onclick="exportToCSV()">📊 Excel Export</button>
     <button class="btn btn-print" onclick="window.print()">🖨️ A4 Landscape प्रिंट</button>
-    <button class="btn btn-reset" onclick="resetMonthlyForm()">🔄 रीसेट</button>
+    <button class="btn btn-reset" onclick="resetForm()">🔄 रीसेट</button>
   </div>
 </div>
 
 <div class="sheet">
-  <div class="header-title">पी०एम० पोषण (मिड-डे-मील) मासिक प्रगति प्रपत्र</div>
-
-  <div class="meta-grid">
-    <div class="meta-item"><label>विद्यालय का नाम:</label><input type="text" id="schName" class="meta-input" value="P.S. Dhoulari"></div>
-    <div class="meta-item"><label>यू-डाइस कोड:</label><input type="text" id="schUdise" class="meta-input" value="09020201501" maxlength="11"></div>
-    <div class="meta-item"><label>न्याय पंचायत:</label><input type="text" id="schNyayPanchayat" class="meta-input" value="जसौई"></div>
-    <div class="meta-item"><label>विकास क्षेत्र:</label><input type="text" id="schBlock" class="meta-input" value="बघरा"></div>
-    <div class="meta-item"><label>जनपद:</label><input type="text" id="schDistrict" class="meta-input" value="मुजफ्फरनगर"></div>
-    <div class="meta-item"><label>माह का नाम:</label><input type="text" id="schMonth" class="meta-input" value="जनवरी 2026"></div>
-    <div class="meta-item"><label>सत्र:</label><input type="text" id="schSession" class="meta-input" value="2025-2026"></div>
-    <div class="meta-item"><label>कुल कार्य दिवस:</label><input type="text" id="masterWorkingDays" class="meta-input" value="18" oninput="syncWorkingDays(this.value)"></div>
+  <div class="header-block">
+    <h2>पी०एम० पोषण योजान्तर्गत मिड-डे-मील मासिक उपभोग प्रमाण पत्र</h2>
   </div>
 
-  <!-- प्रपत्र 1: खाद्यान्न विवरण -->
+  <!-- शीर्ष जानकारी (Header Grid) -->
+  <div class="meta-top-grid">
+    <div class="meta-item"><label>विद्यालय का नाम:</label><input type="text" id="schName" class="meta-input" value="प्राथमिक विद्यालय धौलरी"></div>
+    <div class="meta-item"><label>यू-डाइस कोड:</label><input type="text" id="schUdise" class="meta-input" value="09020201501" maxlength="11"></div>
+    <div class="meta-item"><label>विकास क्षेत्र:</label><input type="text" id="schBlock" class="meta-input" value="बघरा"></div>
+    <div class="meta-item"><label>जनपद:</label><input type="text" id="schDistrict" class="meta-input" value="मु० नगर"></div>
+    <div class="meta-item"><label>न्याय पंचायत:</label><input type="text" id="schNyay" class="meta-input" value="जसौई"></div>
+    <div class="meta-item"><label>माह:</label><input type="text" id="schMonth" class="meta-input" value="जनवरी 2026"></div>
+    <div class="meta-item" style="grid-column: span 2;"><label>सत्र:</label><input type="text" id="schSession" class="meta-input" value="2025-2026"></div>
+  </div>
+
+  <!-- कार्य दिवस व भोजन विवरण बार (PDF मानक) -->
+  <div class="days-bar">
+    <div>माह मे विद्यालय कितने दिन खुला (दिनों की संख्या): <input type="text" id="daysOpen" value="18" style="width: 35px;"></div>
+    <div>कितने दिन विद्यालय में भोजन बना (दिनों की संख्या): <input type="text" id="daysCooked" value="18" style="width: 35px;"></div>
+    <div style="flex: 1; display: flex; align-items: center; gap: 4px;">
+      यदि भोजन नही बना तो कारण: <input type="text" id="reasonNotCooked" style="flex: 1;" placeholder="उदा. शीतावकाश / खाद्यान्न अनुपलब्धता">
+    </div>
+  </div>
+
+  <!-- प्रपत्र 1: खाद्यान्न विवरण (PDF अनुसार 18 कॉलम लेआउट) -->
   <div class="section-label">
-    <span>1. खाद्यान्न (गेहूँ एवं चावल) विवरण (मात्रा किग्रा० में)</span>
-    <span id="grainStatusBadge" class="status-badge badge-success">✓ मानक: 100 ग्राम प्रति छात्र</span>
+    <span>1. खाद्यान्न (गेहूँ एवं चावल) विवरण (मात्रा किलो ग्राम मे)</span>
+    <span id="grainStatusTag" class="status-tag tag-success">मानक: 100 ग्राम प्रति छात्र/दिन</span>
   </div>
   <table id="tblGrain">
     <thead>
       <tr>
-        <th rowspan="2" style="width: 6%;">कुल कार्य दिवस</th>
-        <th rowspan="2" style="width: 7%;">भोजन बना (दिन)</th>
-        <th rowspan="2" style="width: 7%;">पंजीकृत छात्र</th>
-        <th rowspan="2" style="width: 8%;">लाभार्थी छात्र सं०</th>
-        <th colspan="2" style="width: 17%;">गत माह का अवशेष खाद्यान्न</th>
-        <th colspan="2" style="width: 15%;">माह में प्राप्त खाद्यान्न</th>
-        <th colspan="2" style="width: 18%;">माह में व्यय खाद्यान्न</th>
-        <th colspan="2" style="width: 22%;">माह के अन्त में अवशेष खाद्यान्न</th>
+        <th rowspan="2" style="width: 2.5%;">क्र०<br>स०</th>
+        <th rowspan="2" style="width: 5%;">पंजीकृत<br>छात्र सं०</th>
+        <th rowspan="2" style="width: 5.5%;">लाभार्थी<br>छात्र सं०</th>
+        <th colspan="3" style="width: 17%;">गत अवशेष खाद्यान्न की मात्रा</th>
+        <th colspan="3" style="width: 17%;">आवांटित खाद्यान्न की मात्रा</th>
+        <th colspan="3" style="width: 17%;">कुल खाद्यान्न की मात्रा (गत+आवांटित)</th>
+        <th colspan="3" style="width: 18%;">व्यय खाद्यान्न की मात्रा</th>
+        <th colspan="3" style="width: 18%;">अवशेष खाद्यान्न की मात्रा</th>
       </tr>
       <tr class="bg-sub">
-        <th style="width: 8.5%;">गेहूँ</th>
-        <th style="width: 8.5%;">चावल</th>
-        <th style="width: 7.5%;">गेहूँ</th>
-        <th style="width: 7.5%;">चावल</th>
-        <th style="width: 9%;">गेहूँ</th>
-        <th style="width: 9%;">चावल</th>
-        <th style="width: 11%;">गेहूँ</th>
-        <th style="width: 11%;">चावल</th>
+        <!-- गत अवशेष -->
+        <th style="width: 5.6%;">गेहूँ</th><th style="width: 5.6%;">चावल</th><th style="width: 5.8%;">कुल योग</th>
+        <!-- आवांटित -->
+        <th style="width: 5.6%;">गेहूँ</th><th style="width: 5.6%;">चावल</th><th style="width: 5.8%;">कुल योग</th>
+        <!-- कुल उपलब्ध -->
+        <th style="width: 5.6%;">गेहूँ</th><th style="width: 5.6%;">चावल</th><th style="width: 5.8%;">कुल योग</th>
+        <!-- व्यय -->
+        <th style="width: 6%;">गेहूँ</th><th style="width: 6%;">चावल</th><th style="width: 6%;">कुल योग</th>
+        <!-- अवशेष -->
+        <th style="width: 6%;">गेहूँ</th><th style="width: 6%;">चावल</th><th style="width: 6%;">कुल योग</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><input type="text" id="g_work_days" class="tbl-in sync-wd" value="18"></td>
-        <td><input type="text" id="g_cook_days" class="tbl-in" value="18"></td>
-        <td><input type="text" id="g_enrolled" class="tbl-in sync-enrolled" value="128" oninput="syncEnrolled(this.value)"></td>
-        <td><input type="text" id="g_beneficiaries" class="tbl-in" value="994" oninput="onBeneficiaryChange(this.value)"></td>
-        <td><input type="text" id="g_open_w" class="tbl-in neg-val" value="-36.202" oninput="calcGrainBal()"></td>
-        <td><input type="text" id="g_open_r" class="tbl-in neg-val" value="-314.678" oninput="calcGrainBal()"></td>
-        <td><input type="text" id="g_rec_w" class="tbl-in" value="0" oninput="calcGrainBal()"></td>
-        <td><input type="text" id="g_rec_r" class="tbl-in" value="0" oninput="calcGrainBal()"></td>
-        <td><input type="text" id="g_exp_w" class="tbl-in" value="28.9" oninput="checkFoodgrainNorm()"></td>
-        <td><input type="text" id="g_exp_r" class="tbl-in" value="70.5" oninput="checkFoodgrainNorm()"></td>
-        <td><input type="text" id="g_close_w" class="tbl-in neg-val" value="-65.102" readonly></td>
-        <td><input type="text" id="g_close_r" class="tbl-in neg-val" value="-385.178" readonly></td>
+        <td>1</td>
+        <td><input type="text" id="g_enrolled" class="tbl-in" value="128"></td>
+        <td><input type="text" id="g_ben" class="tbl-in" value="994" oninput="onMainBeneficiaryChange(this.value)"></td>
+        <!-- गत अवशेष -->
+        <td><input type="text" id="g_open_w" class="tbl-in neg-val" value="-36.202" oninput="calcGrainAll()"></td>
+        <td><input type="text" id="g_open_r" class="tbl-in neg-val" value="-314.678" oninput="calcGrainAll()"></td>
+        <td><input type="text" id="g_open_tot" class="tbl-in bg-tot neg-val" value="-350.880" readonly></td>
+        <!-- आवांटित -->
+        <td><input type="text" id="g_rec_w" class="tbl-in" value="0" oninput="calcGrainAll()"></td>
+        <td><input type="text" id="g_rec_r" class="tbl-in" value="0" oninput="calcGrainAll()"></td>
+        <td><input type="text" id="g_rec_tot" class="tbl-in bg-tot" value="0.000" readonly></td>
+        <!-- कुल खाद्यान्न -->
+        <td><input type="text" id="g_tot_w" class="tbl-in bg-tot neg-val" value="-36.202" readonly></td>
+        <td><input type="text" id="g_tot_r" class="tbl-in bg-tot neg-val" value="-314.678" readonly></td>
+        <td><input type="text" id="g_tot_tot" class="tbl-in bg-tot neg-val" value="-350.880" readonly></td>
+        <!-- व्यय -->
+        <td><input type="text" id="g_exp_w" class="tbl-in" value="28.9" oninput="checkGrainNorms()"></td>
+        <td><input type="text" id="g_exp_r" class="tbl-in" value="70.5" oninput="checkGrainNorms()"></td>
+        <td><input type="text" id="g_exp_tot" class="tbl-in bg-tot" value="99.400" readonly></td>
+        <!-- अवशेष -->
+        <td><input type="text" id="g_bal_w" class="tbl-in neg-val" value="-65.102" readonly></td>
+        <td><input type="text" id="g_bal_r" class="tbl-in neg-val" value="-385.178" readonly></td>
+        <td><input type="text" id="g_bal_tot" class="tbl-in bg-tot neg-val" value="-450.280" readonly></td>
       </tr>
     </tbody>
   </table>
 
-  <!-- प्रपत्र 2: परिवर्तन लागत -->
+  <!-- प्रपत्र 2: कन्वर्जन कास्ट मांग पत्र (PDF लेआउट) -->
   <div class="section-label">
-    <span>2. परिवर्तन लागत (Conversion Cost) विवरण (दर: ₹6.78 प्रति छात्र)</span>
+    <span>2. कन्वर्जन कास्ट मांग पत्र (दर: ₹6.78 प्रति छात्र/दिन)</span>
   </div>
   <table id="tblCost">
     <thead>
       <tr class="bg-sub">
-        <th style="width: 8%;">कुल कार्य दिवस</th>
-        <th style="width: 9%;">भोजन बना (दिन)</th>
-        <th style="width: 9%;">पंजीकृत छात्र</th>
-        <th style="width: 10%;">लाभार्थी छात्र सं०</th>
-        <th style="width: 18%;">गत माह का कन्वर्जन अवशेष (₹)</th>
-        <th style="width: 15%;">माह में प्राप्त धनराशि (₹)</th>
-        <th style="width: 15%;">माह में व्यय धनराशि (₹)</th>
-        <th style="width: 16%;">माह के अन्त में अवशेष धनराशि (₹)</th>
+        <th style="width: 4%;">क्र० स०</th>
+        <th style="width: 14%;">लाभार्थी छात्र संख्या</th>
+        <th style="width: 20%;">गतअवशेष कन्वर्जन कास्ट (रू० में)</th>
+        <th style="width: 16%;">आवांटित धनराशि</th>
+        <th style="width: 16%;">कुल धनराशि (गत+आवांटित)</th>
+        <th style="width: 15%;">व्यय धनराशि</th>
+        <th style="width: 15%;">अवशेष धनराशि</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><input type="text" id="c_work_days" class="tbl-in sync-wd" value="18"></td>
-        <td><input type="text" id="c_cook_days" class="tbl-in" value="18"></td>
-        <td><input type="text" id="c_enrolled" class="tbl-in sync-enrolled" value="128"></td>
-        <td><input type="text" id="c_beneficiaries" class="tbl-in" value="994" oninput="onBeneficiaryChange(this.value)"></td>
-        <td><input type="text" id="c_open" class="tbl-in neg-val" value="-38144.27" oninput="calcCostBal()"></td>
-        <td><input type="text" id="c_rec" class="tbl-in" value="0" oninput="calcCostBal()"></td>
-        <td><input type="text" id="c_exp" class="tbl-in" value="6739.32" oninput="calcCostBal()"></td>
-        <td><input type="text" id="c_close" class="tbl-in neg-val" value="-44883.59" readonly></td>
+        <td>1</td>
+        <td><input type="text" id="c_ben" class="tbl-in" value="994" oninput="onMainBeneficiaryChange(this.value)"></td>
+        <td><input type="text" id="c_open" class="tbl-in neg-val" value="-38144.27" oninput="calcCostAll()"></td>
+        <td><input type="text" id="c_rec" class="tbl-in" value="0" oninput="calcCostAll()"></td>
+        <td><input type="text" id="c_tot" class="tbl-in bg-tot neg-val" value="-38144.27" readonly></td>
+        <td><input type="text" id="c_exp" class="tbl-in" value="6739.32" oninput="calcCostAll()"></td>
+        <td><input type="text" id="c_bal" class="tbl-in neg-val" value="-44883.59" readonly></td>
       </tr>
     </tbody>
   </table>
 
-  <!-- प्रपत्र 3: फल वितरण -->
+  <!-- प्रपत्र 3: फल वितरण (PDF लेआउट) -->
   <div class="section-label">
-    <span>3. अतिरिक्त पोषण (फल वितरण) विवरण (दर: ₹4.00 प्रति छात्र)</span>
+    <span>3. फल वितरण (दर: ₹4.00 प्रति छात्र)</span>
   </div>
   <table id="tblFruit">
     <thead>
       <tr class="bg-sub">
-        <th style="width: 8%;">कुल कार्य दिवस</th>
-        <th style="width: 9%;">फल दिवस</th>
-        <th style="width: 9%;">पंजीकृत छात्र</th>
-        <th style="width: 10%;">लाभार्थी छात्र सं०</th>
-        <th style="width: 18%;">गत माह का फल अवशेष (₹)</th>
-        <th style="width: 15%;">माह में प्राप्त फल धनराशि (₹)</th>
-        <th style="width: 15%;">माह में व्यय फल धनराशि (₹)</th>
-        <th style="width: 16%;">माह के अन्त में अवशेष फल धनराशि (₹)</th>
+        <th style="width: 4%;">क्र० स०</th>
+        <th style="width: 14%;">लाभार्थी संख्या</th>
+        <th style="width: 20%;">गत अवशेष (रू० में)</th>
+        <th style="width: 16%;">माह में प्राप्त</th>
+        <th style="width: 16%;">कुल धनराशि (गत+प्राप्त)</th>
+        <th style="width: 15%;">माह मे खर्च धनराशि</th>
+        <th style="width: 15%;">अवशेष धनराशि</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><input type="text" id="f_work_days" class="tbl-in sync-wd" value="18"></td>
-        <td><input type="text" id="f_dist_days" class="tbl-in" value="4"></td>
-        <td><input type="text" id="f_enrolled" class="tbl-in sync-enrolled" value="128"></td>
-        <td><input type="text" id="f_beneficiaries" class="tbl-in" value="170" oninput="onFruitBenChange(this.value)"></td>
-        <td><input type="text" id="f_open" class="tbl-in pos-val" value="13039" oninput="calcFruitBal()"></td>
-        <td><input type="text" id="f_rec" class="tbl-in" value="0" oninput="calcFruitBal()"></td>
-        <td><input type="text" id="f_exp" class="tbl-in" value="680" oninput="calcFruitBal()"></td>
-        <td><input type="text" id="f_close" class="tbl-in pos-val" value="12359" readonly></td>
+        <td>1</td>
+        <td><input type="text" id="f_ben" class="tbl-in" value="170" oninput="onFruitBenChange(this.value)"></td>
+        <td><input type="text" id="f_open" class="tbl-in pos-val" value="13039" oninput="calcFruitAll()"></td>
+        <td><input type="text" id="f_rec" class="tbl-in" value="0" oninput="calcFruitAll()"></td>
+        <td><input type="text" id="f_tot" class="tbl-in bg-tot pos-val" value="13039" readonly></td>
+        <td><input type="text" id="f_exp" class="tbl-in" value="680" oninput="calcFruitAll()"></td>
+        <td><input type="text" id="f_bal" class="tbl-in pos-val" value="12359" readonly></td>
       </tr>
     </tbody>
   </table>
 
-  <!-- प्रपत्र 4: न्यूट्रीशन वितरण -->
+  <!-- प्रपत्र 4: पी०एम० पोषण सप्लीमेन्ट्री न्यूट्रीशन उपभोग (PDF अनुसार 5-सप्ताह + योग प्रारूप) -->
   <div class="section-label">
-    <span>4. पूरक पोषाहार (न्यूट्रीशन) विवरण (दर: ₹5.00 प्रति छात्र)</span>
+    <span>4. पी०एम० पोषण योजान्तर्गत वितरित सप्लीमेन्ट्री न्यूट्रीशन उपभोग (दर: ₹5.00 प्रति छात्र)</span>
   </div>
-  <table id="tblNutrition">
+  <table id="tblNutr">
     <thead>
       <tr class="bg-sub">
-        <th style="width: 8%;">कुल कार्य दिवस</th>
-        <th style="width: 9%;">वितरण दिवस</th>
-        <th style="width: 9%;">पंजीकृत छात्र</th>
+        <th style="width: 3.5%;">क्र० स०</th>
+        <th style="width: 11%;">वितरण तिथि</th>
+        <th style="width: 10%;">नामांकित छात्र सं०</th>
         <th style="width: 10%;">लाभार्थी छात्र सं०</th>
-        <th style="width: 18%;">गत माह का न्यूट्रीशन अवशेष (₹)</th>
-        <th style="width: 15%;">माह में प्राप्त धनराशि (₹)</th>
-        <th style="width: 15%;">माह में व्यय धनराशि (₹)</th>
-        <th style="width: 16%;">माह के अन्त में अवशेष धनराशि (₹)</th>
+        <th style="width: 18%;">वितरित की गयी सामग्री विवरण</th>
+        <th style="width: 16%;">उपभोग कुल धनराशि (दर ₹5/-)</th>
+        <th style="width: 15%;">आवंटित / प्राप्त धनराशि</th>
+        <th style="width: 16.5%;">मासान्त पर अवशेष धनराशि</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="nutrBody">
+      <!-- Row 1 -->
       <tr>
-        <td><input type="text" id="n_work_days" class="tbl-in sync-wd" value="18"></td>
-        <td><input type="text" id="n_dist_days" class="tbl-in" value="3"></td>
-        <td><input type="text" id="n_enrolled" class="tbl-in sync-enrolled" value="128"></td>
-        <td><input type="text" id="n_beneficiaries" class="tbl-in" value="219" oninput="onNutritionBenChange(this.value)"></td>
-        <td><input type="text" id="n_open" class="tbl-in neg-val" value="-2586" oninput="calcNutritionBal()"></td>
-        <td><input type="text" id="n_rec" class="tbl-in" value="0" oninput="calcNutritionBal()"></td>
-        <td><input type="text" id="n_exp" class="tbl-in" value="1095" oninput="calcNutritionBal()"></td>
-        <td><input type="text" id="n_close" class="tbl-in neg-val" value="-3681" readonly></td>
+        <td>1</td>
+        <td><input type="text" class="tbl-in n-date" value="07-01-2026" placeholder="DD-MM-YYYY"></td>
+        <td><input type="text" class="tbl-in n-enr" value="128"></td>
+        <td><input type="text" class="tbl-in n-ben" value="73" oninput="calcNutrRow(this)"></td>
+        <td><input type="text" class="tbl-in n-item" value="भुना चना व गुड़"></td>
+        <td><input type="text" class="tbl-in n-exp" value="365.00" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-rec" value="0" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-bal" readonly></td>
+      </tr>
+      <!-- Row 2 -->
+      <tr>
+        <td>2</td>
+        <td><input type="text" class="tbl-in n-date" value="14-01-2026" placeholder="DD-MM-YYYY"></td>
+        <td><input type="text" class="tbl-in n-enr" value="128"></td>
+        <td><input type="text" class="tbl-in n-ben" value="73" oninput="calcNutrRow(this)"></td>
+        <td><input type="text" class="tbl-in n-item" value="गजक / चिक्की"></td>
+        <td><input type="text" class="tbl-in n-exp" value="365.00" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-rec" value="0" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-bal" readonly></td>
+      </tr>
+      <!-- Row 3 -->
+      <tr>
+        <td>3</td>
+        <td><input type="text" class="tbl-in n-date" value="21-01-2026" placeholder="DD-MM-YYYY"></td>
+        <td><input type="text" class="tbl-in n-enr" value="128"></td>
+        <td><input type="text" class="tbl-in n-ben" value="73" oninput="calcNutrRow(this)"></td>
+        <td><input type="text" class="tbl-in n-item" value="भुना चना व गुड़"></td>
+        <td><input type="text" class="tbl-in n-exp" value="365.00" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-rec" value="0" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-bal" readonly></td>
+      </tr>
+      <!-- Row 4 -->
+      <tr>
+        <td>4</td>
+        <td><input type="text" class="tbl-in n-date" value="" placeholder="DD-MM-YYYY"></td>
+        <td><input type="text" class="tbl-in n-enr" value=""></td>
+        <td><input type="text" class="tbl-in n-ben" value="" oninput="calcNutrRow(this)"></td>
+        <td><input type="text" class="tbl-in n-item" value=""></td>
+        <td><input type="text" class="tbl-in n-exp" value="" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-rec" value="" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-bal" readonly></td>
+      </tr>
+      <!-- Row 5 -->
+      <tr>
+        <td>5</td>
+        <td><input type="text" class="tbl-in n-date" value="" placeholder="DD-MM-YYYY"></td>
+        <td><input type="text" class="tbl-in n-enr" value=""></td>
+        <td><input type="text" class="tbl-in n-ben" value="" oninput="calcNutrRow(this)"></td>
+        <td><input type="text" class="tbl-in n-item" value=""></td>
+        <td><input type="text" class="tbl-in n-exp" value="" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-rec" value="" oninput="calcNutrTotals()"></td>
+        <td><input type="text" class="tbl-in n-bal" readonly></td>
+      </tr>
+      <!-- कुल योग Row -->
+      <tr class="bg-tot">
+        <td colspan="3"><strong>कुल योग (सहित गत अवशेष: <input type="text" id="n_opening_bal" value="-2586" style="width:55px; border:none; background:transparent; font-weight:bold; color:#dc2626;" oninput="calcNutrTotals()">)</strong></td>
+        <td id="n_tot_ben">219</td>
+        <td>प्रमाणित</td>
+        <td id="n_tot_exp">1095.00</td>
+        <td id="n_tot_rec">0.00</td>
+        <td id="n_final_bal" class="neg-val">-3681.00</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="declaration-box">
-    <strong>प्रमाणीकरण:</strong> प्रमाणित किया जाता है कि मेरे द्वारा दी गयी उपरोक्त समस्त सूचनाओं का मिलान विद्यालयी एम0डी0एम0 पंजिका, छात्र उपस्थिति पंजिका एवं बैंक पासबुक से भली-भाँति कर लिया गया है। यदि उपरोक्त सूचना में कोई अंतर अथवा विसंगति पायी जाती है तो उसका पूर्ण उत्तरदायित्व स्वयं मेरा होगा।
-  </div>
-
+  <!-- हस्ताक्षर ब्लॉक (PDF मानक) -->
   <div class="signatures-grid">
     <div>
-      <br><br>हस्ताक्षर एवं मुहर<br>
-      <strong>प्रधानाध्यापक / इंचार्ज अध्यापक</strong><br>
-      <input type="text" id="signHM" class="meta-input" value="प्रा० वि० धौलरी, बघरा" style="width: 190px;">
+      <br><br>
+      हस्ताक्षर प्र०अ० मोहर सहित<br>
+      <input type="text" id="signHM" class="meta-input" value="प्राथमिक विद्यालय धौलरी, बघरा" style="width: 220px;">
     </div>
     <div>
-      <br><br>हस्ताक्षर एवं मुहर<br>
-      <strong>अध्यक्ष, विद्यालय प्रबंध समिति (SMC)</strong><br>
-      <input type="text" id="signSMC" class="meta-input" value="प्रा० वि० धौलरी" style="width: 170px;">
-    </div>
-    <div>
-      <br><br>हस्ताक्षर एवं मुहर<br>
-      <strong>ग्राम प्रधान / सभासद</strong><br>
-      ग्राम पंचायत: <input type="text" id="signGP" class="meta-input" value="धौलरी" style="width: 85px;">
+      <br><br>
+      हस्ताक्षर विद्यालय प्रबन्ध समिति अध्यक्ष मोहर सहित<br>
+      <input type="text" id="signSMC" class="meta-input" value="प्राथमिक विद्यालय धौलरी" style="width: 200px;">
     </div>
   </div>
 </div>
 
 <script>
-  const STORAGE_KEY = 'mdm_monthly_report_data';
+  const STORAGE_KEY = 'mdm_monthly_report_pdf_format';
 
-  function parseVal(id) {
-    const el = document.getElementById(id);
+  function parseVal(idOrEl) {
+    const el = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
     if (!el) return 0;
     let v = (el.value || '').toString().replace(/,/g, '').trim();
     v = v.replace(/[०-९]/g, d => "०१२३४५६७८९".indexOf(d));
@@ -411,158 +494,227 @@
     return isNaN(num) ? 0 : num;
   }
 
-  function setValAndColor(elId, val, decimals = 2) {
-    const el = document.getElementById(elId);
+  function setNum(id, val, dec = 2) {
+    const el = document.getElementById(id);
     if (!el) return;
-    el.value = val.toFixed(decimals);
-    el.className = `tbl-in ${val < 0 ? 'neg-val' : 'pos-val'}`;
+    el.value = val.toFixed(dec);
+    if(val < 0) {
+      el.classList.add('neg-val');
+      el.classList.remove('pos-val');
+    } else {
+      el.classList.remove('neg-val');
+      if(val > 0) el.classList.add('pos-val');
+    }
   }
 
-  // 1. मुख्य लाभार्थी संख्या बदलते ही नियमबद्ध ऑटो-व्यय
-  function onBeneficiaryChange(val) {
-    const ben = parseFloat(val) || 0;
-    document.getElementById('g_beneficiaries').value = ben;
-    document.getElementById('c_beneficiaries').value = ben;
+  // 1. खाद्यान्न सम्पूर्ण गणना व सत्यापन
+  function calcGrainAll() {
+    const openW = parseVal('g_open_w');
+    const openR = parseVal('g_open_r');
+    setNum('g_open_tot', openW + openR, 3);
 
-    // नियम: कन्वर्जन व्यय = लाभार्थी * 6.78
-    const costExp = (ben * 6.78).toFixed(2);
-    document.getElementById('c_exp').value = costExp;
+    const recW = parseVal('g_rec_w');
+    const recR = parseVal('g_rec_r');
+    setNum('g_rec_tot', recW + recR, 3);
 
-    checkFoodgrainNorm();
-    calcCostBal();
+    const totW = openW + recW;
+    const totR = openR + recR;
+    setNum('g_tot_w', totW, 3);
+    setNum('g_tot_r', totR, 3);
+    setNum('g_tot_tot', totW + totR, 3);
+
+    const expW = parseVal('g_exp_w');
+    const expR = parseVal('g_exp_r');
+    setNum('g_exp_tot', expW + expR, 3);
+
+    const balW = totW - expW;
+    const balR = totR - expR;
+    setNum('g_bal_w', balW, 3);
+    setNum('g_bal_r', balR, 3);
+    setNum('g_bal_tot', balW + balR, 3);
+
+    checkGrainNorms();
   }
 
-  // फल वितरण लाभार्थी बदलते ही व्यय = लाभार्थी * 4
-  function onFruitBenChange(val) {
-    const ben = parseFloat(val) || 0;
-    document.getElementById('f_exp').value = (ben * 4).toFixed(2);
-    calcFruitBal();
-  }
-
-  // न्यूट्रीशन लाभार्थी बदलते ही व्यय = लाभार्थी * 5
-  function onNutritionBenChange(val) {
-    const ben = parseFloat(val) || 0;
-    document.getElementById('n_exp').value = (ben * 5).toFixed(2);
-    calcNutritionBal();
-  }
-
-  // 2. खाद्यान्न सत्यापन: केवल जांच करना और गलत होने पर बॉक्स RED करना
-  function checkFoodgrainNorm() {
-    const ben = parseVal('g_beneficiaries');
+  function checkGrainNorms() {
+    const ben = parseVal('g_ben');
     const expectedKg = parseFloat((ben * 0.100).toFixed(3)); // 100 ग्राम = 0.100 किग्रा
     const actualW = parseVal('g_exp_w');
     const actualR = parseVal('g_exp_r');
-    const actualTotal = parseFloat((actualW + actualR).toFixed(3));
+    const actualTot = parseFloat((actualW + actualR).toFixed(3));
 
     const wBox = document.getElementById('g_exp_w');
     const rBox = document.getElementById('g_exp_r');
-    const badge = document.getElementById('grainStatusBadge');
+    const tag = document.getElementById('grainStatusTag');
+
+    setNum('g_exp_tot', actualTot, 3);
+
+    // अवशेष पुनः गणना
+    const totW = parseVal('g_tot_w');
+    const totR = parseVal('g_tot_r');
+    setNum('g_bal_w', totW - actualW, 3);
+    setNum('g_bal_r', totR - actualR, 3);
+    setNum('g_bal_tot', (totW - actualW) + (totR - actualR), 3);
 
     if (ben > 0) {
-      const diff = Math.abs(actualTotal - expectedKg);
-      if (diff > 0.005) { // यदि गलत हो (अंतर 5 ग्राम से अधिक)
+      if (Math.abs(actualTot - expectedKg) > 0.005) { // यदि गलत हो तो RED कर दें
         wBox.classList.add('box-error');
-        wBox.classList.remove('box-valid');
         rBox.classList.add('box-error');
+        wBox.classList.remove('box-valid');
         rBox.classList.remove('box-valid');
-
-        badge.className = 'status-badge badge-danger';
-        badge.innerText = `⚠️ त्रुटि: कुल व्यय (${actualTotal} किग्रा) मानक (${expectedKg} किग्रा) से भिन्न है!`;
+        tag.className = 'status-tag tag-danger';
+        tag.innerText = `⚠️ त्रुटि: कुल खाद्यान्न व्यय (${actualTot} किग्रा) मानक (${expectedKg} किग्रा) से भिन्न है!`;
       } else {
         wBox.classList.remove('box-error');
-        wBox.classList.add('box-valid');
         rBox.classList.remove('box-error');
+        wBox.classList.add('box-valid');
         rBox.classList.add('box-valid');
-
-        badge.className = 'status-badge badge-success';
-        badge.innerText = `✓ मानक अनुसार सटीक: ${actualTotal} किग्रा (100 ग्राम/छात्र)`;
+        tag.className = 'status-tag tag-success';
+        tag.innerText = `✓ मानक अनुसार सटीक: ${actualTot} किग्रा (100 ग्राम/छात्र)`;
       }
-    } else {
-      wBox.classList.remove('box-error', 'box-valid');
-      rBox.classList.remove('box-error', 'box-valid');
-      badge.className = 'status-badge badge-success';
-      badge.innerText = 'मानक: 100 ग्राम प्रति छात्र';
     }
-
-    calcGrainBal();
   }
 
-  // 3. अवशेष गणनाएं (Bal = Open + Rec - Exp)
-  function calcGrainBal() {
-    const openW = parseVal('g_open_w');
-    const recW = parseVal('g_rec_w');
-    const expW = parseVal('g_exp_w');
-    setValAndColor('g_close_w', openW + recW - expW, 3);
+  // 2. मुख्य लाभार्थी बदलने पर कन्वर्जन व खाद्यान्न स्वतः अपडेट
+  function onMainBeneficiaryChange(val) {
+    const ben = parseVal(val);
+    document.getElementById('g_ben').value = ben;
+    document.getElementById('c_ben').value = ben;
 
-    const openR = parseVal('g_open_r');
-    const recR = parseVal('g_rec_r');
-    const expR = parseVal('g_exp_r');
-    setValAndColor('g_close_r', openR + recR - expR, 3);
+    // नियम: कन्वर्जन व्यय = लाभार्थी * 6.78
+    const exp = (ben * 6.78).toFixed(2);
+    document.getElementById('c_exp').value = exp;
+
+    calcCostAll();
+    checkGrainNorms();
   }
 
-  function calcCostBal() {
+  function calcCostAll() {
     const open = parseVal('c_open');
     const rec = parseVal('c_rec');
+    const tot = open + rec;
+    setNum('c_tot', tot, 2);
+
     const exp = parseVal('c_exp');
-    setValAndColor('c_close', open + rec - exp, 2);
+    setNum('c_bal', tot - exp, 2);
   }
 
-  function calcFruitBal() {
+  // 3. फल वितरण लाभार्थी बदलने पर व्यय = लाभार्थी * 4
+  function onFruitBenChange(val) {
+    const ben = parseVal(val);
+    document.getElementById('f_exp').value = (ben * 4).toFixed(2);
+    calcFruitAll();
+  }
+
+  function calcFruitAll() {
     const open = parseVal('f_open');
     const rec = parseVal('f_rec');
+    const tot = open + rec;
+    setNum('f_tot', tot, 2);
+
     const exp = parseVal('f_exp');
-    setValAndColor('f_close', open + rec - exp, 2);
+    setNum('f_bal', tot - exp, 2);
   }
 
-  function calcNutritionBal() {
-    const open = parseVal('n_open');
-    const rec = parseVal('n_rec');
-    const exp = parseVal('n_exp');
-    setValAndColor('n_close', open + rec - exp, 2);
+  // 4. सप्लीमेन्ट्री न्यूट्रीशन तालिका की गणना (लाभार्थी * 5)
+  function calcNutrRow(inputEl) {
+    const row = inputEl.closest('tr');
+    const ben = parseVal(inputEl);
+    const expInput = row.querySelector('.n-exp');
+    if (ben > 0) {
+      expInput.value = (ben * 5).toFixed(2);
+    }
+    calcNutrTotals();
   }
 
-  function runCompleteCalculation(showAlert = false) {
-    checkFoodgrainNorm();
-    calcCostBal();
-    calcFruitBal();
-    calcNutritionBal();
-    if(showAlert) alert('समस्त प्रपत्रों की मानक जांच व अवशेष गणना पूर्ण हो गई है!');
+  function calcNutrTotals() {
+    const rows = document.querySelectorAll('#nutrBody tr:not(.bg-tot)');
+    let totBen = 0, totExp = 0, totRec = 0;
+    const openingBal = parseVal('n_opening_bal');
+
+    rows.forEach(r => {
+      const b = parseVal(r.querySelector('.n-ben'));
+      const e = parseVal(r.querySelector('.n-exp'));
+      const rc = parseVal(r.querySelector('.n-rec'));
+
+      totBen += b;
+      totExp += e;
+      totRec += rc;
+    });
+
+    document.getElementById('n_tot_ben').innerText = totBen;
+    document.getElementById('n_tot_exp').innerText = totExp.toFixed(2);
+    document.getElementById('n_tot_rec').innerText = totRec.toFixed(2);
+
+    const finalBal = openingBal + totRec - totExp;
+    const finalEl = document.getElementById('n_final_bal');
+    finalEl.innerText = finalBal.toFixed(2);
+    finalEl.className = finalBal < 0 ? 'neg-val' : 'pos-val';
   }
 
-  function syncWorkingDays(val) {
-    document.querySelectorAll('.sync-wd').forEach(el => el.value = val);
-  }
-  function syncEnrolled(val) {
-    document.querySelectorAll('.sync-enrolled').forEach(el => el.value = val);
-  }
-
-  function saveMonthlyData() {
-    const inputs = document.querySelectorAll('input');
-    const formData = {};
-    inputs.forEach(inp => { if (inp.id) formData[inp.id] = inp.value; });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-    alert('मासिक प्रपत्र का संपूर्ण विवरण सुरक्षित कर लिया गया है!');
+  function calculateAllSections(showAlert = false) {
+    calcGrainAll();
+    calcCostAll();
+    calcFruitAll();
+    calcNutrTotals();
+    if(showAlert) alert('आधिकारिक प्रपत्रानुसार समस्त गणना व 100 ग्राम मानक सत्यापन पूर्ण हो चुका है!');
   }
 
-  function exportMonthlyCSV() {
+  function saveAllMonthlyData() {
+    const data = {};
+    document.querySelectorAll('input').forEach(inp => {
+      if(inp.id) data[inp.id] = inp.value;
+    });
+
+    // न्यूट्रीशन rows को अलग से एरे में सुरक्षित करना
+    data.nutritionRows = [];
+    document.querySelectorAll('#nutrBody tr:not(.bg-tot)').forEach(r => {
+      data.nutritionRows.push({
+        date: r.querySelector('.n-date').value,
+        enr: r.querySelector('.n-enr').value,
+        ben: r.querySelector('.n-ben').value,
+        item: r.querySelector('.n-item').value,
+        exp: r.querySelector('.n-exp').value,
+        rec: r.querySelector('.n-rec').value
+      });
+    });
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    alert('मिड-डे-मील मासिक उपभोग प्रमाण पत्र सफलतापूर्वक सुरक्षित हो गया है!');
+  }
+
+  function exportToCSV() {
     const sch = document.getElementById('schName').value;
     const m = document.getElementById('schMonth').value;
-    let csv = `मासिक एमडीएम प्रपत्र - ${sch} (${m})\n\n`;
-    csv += "प्रपत्र,कार्य दिवस,लाभार्थी,गत अवशेष 1,गत अवशेष 2,प्राप्त 1,प्राप्त 2,व्यय 1,व्यय 2,अन्त अवशेष 1,अन्त अवशेष 2\n";
-    csv += `खाद्यान्न,${document.getElementById('g_work_days').value},${document.getElementById('g_beneficiaries').value},${document.getElementById('g_open_w').value},${document.getElementById('g_open_r').value},${document.getElementById('g_rec_w').value},${document.getElementById('g_rec_r').value},${document.getElementById('g_exp_w').value},${document.getElementById('g_exp_r').value},${document.getElementById('g_close_w').value},${document.getElementById('g_close_r').value}\n`;
-    csv += `कन्वर्जन,${document.getElementById('c_work_days').value},${document.getElementById('c_beneficiaries').value},${document.getElementById('c_open').value},-,${document.getElementById('c_rec').value},-,${document.getElementById('c_exp').value},-,${document.getElementById('c_close').value},-\n`;
-    csv += `फल,${document.getElementById('f_work_days').value},${document.getElementById('f_beneficiaries').value},${document.getElementById('f_open').value},-,${document.getElementById('f_rec').value},-,${document.getElementById('f_exp').value},-,${document.getElementById('f_close').value},-\n`;
-    csv += `न्यूट्रीशन,${document.getElementById('n_work_days').value},${document.getElementById('n_beneficiaries').value},${document.getElementById('n_open').value},-,${document.getElementById('n_rec').value},-,${document.getElementById('n_exp').value},-,${document.getElementById('n_close').value},-\n`;
+    let csv = `पी०एम० पोषण मिड-डे-मील मासिक उपभोग प्रमाण पत्र - ${sch} (${m})\n\n`;
+
+    csv += "1. खाद्यान्न तालिका\n";
+    csv += "पंजीकृत,लाभार्थी,गत गेहूँ,गत चावल,गत कुल,आवांटित गेहूँ,आवांटित चावल,आवांटित कुल,उपलब्ध गेहूँ,उपलब्ध चावल,उपलब्ध कुल,व्यय गेहूँ,व्यय चावल,व्यय कुल,अवशेष गेहूँ,अवशेष चावल,अवशेष कुल\n";
+    csv += `"${document.getElementById('g_enrolled').value}","${document.getElementById('g_ben').value}","${document.getElementById('g_open_w').value}","${document.getElementById('g_open_r').value}","${document.getElementById('g_open_tot').value}","${document.getElementById('g_rec_w').value}","${document.getElementById('g_rec_r').value}","${document.getElementById('g_rec_tot').value}","${document.getElementById('g_tot_w').value}","${document.getElementById('g_tot_r').value}","${document.getElementById('g_tot_tot').value}","${document.getElementById('g_exp_w').value}","${document.getElementById('g_exp_r').value}","${document.getElementById('g_exp_tot').value}","${document.getElementById('g_bal_w').value}","${document.getElementById('g_bal_r').value}","${document.getElementById('g_bal_tot').value}"\n\n`;
+
+    csv += "2. कन्वर्जन कास्ट\n";
+    csv += "लाभार्थी,गत अवशेष,आवांटित,कुल धनराशि,व्यय धनराशि,अवशेष\n";
+    csv += `"${document.getElementById('c_ben').value}","${document.getElementById('c_open').value}","${document.getElementById('c_rec').value}","${document.getElementById('c_tot').value}","${document.getElementById('c_exp').value}","${document.getElementById('c_bal').value}"\n\n`;
+
+    csv += "3. फल वितरण\n";
+    csv += "लाभार्थी,गत अवशेष,माह प्राप्त,कुल धनराशि,व्यय धनराशि,अवशेष\n";
+    csv += `"${document.getElementById('f_ben').value}","${document.getElementById('f_open').value}","${document.getElementById('f_rec').value}","${document.getElementById('f_tot').value}","${document.getElementById('f_exp').value}","${document.getElementById('f_bal').value}"\n\n`;
+
+    csv += "4. सप्लीमेन्ट्री न्यूट्रीशन\n";
+    csv += "क्र०,तिथि,नामांकित,लाभार्थी,सामग्री विवरण,व्यय,आवांटित\n";
+    document.querySelectorAll('#nutrBody tr:not(.bg-tot)').forEach((r, i) => {
+      csv += `${i+1},"${r.querySelector('.n-date').value}","${r.querySelector('.n-enr').value}","${r.querySelector('.n-ben').value}","${r.querySelector('.n-item').value}","${r.querySelector('.n-exp').value}","${r.querySelector('.n-rec').value}"\n`;
+    });
 
     const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `MDM_Monthly_${m.replace(/\s+/g, '_')}.csv`;
+    link.download = `MDM_Monthly_${sch}_${m}.csv`;
     link.click();
   }
 
-  function resetMonthlyForm() {
-    if(confirm('क्या आप फॉर्म को रीसेट करना चाहते हैं?')) {
+  function resetForm() {
+    if(confirm('क्या आप मासिक प्रपत्र को रीसेट करना चाहते हैं?')) {
       localStorage.removeItem(STORAGE_KEY);
       location.reload();
     }
@@ -572,14 +724,28 @@
     const saved = localStorage.getItem(STORAGE_KEY);
     if(saved) {
       try {
-        const data = JSON.parse(saved);
-        for (let k in data) {
-          const el = document.getElementById(k);
-          if (el) el.value = data[k];
+        const d = JSON.parse(saved);
+        for(let k in d) {
+          if(k !== 'nutritionRows' && document.getElementById(k)) {
+            document.getElementById(k).value = d[k];
+          }
         }
-      } catch (e) {}
+        if(d.nutritionRows) {
+          const rows = document.querySelectorAll('#nutrBody tr:not(.bg-tot)');
+          d.nutritionRows.forEach((rData, i) => {
+            if(rows[i]) {
+              rows[i].querySelector('.n-date').value = rData.date || '';
+              rows[i].querySelector('.n-enr').value = rData.enr || '';
+              rows[i].querySelector('.n-ben').value = rData.ben || '';
+              rows[i].querySelector('.n-item').value = rData.item || '';
+              rows[i].querySelector('.n-exp').value = rData.exp || '';
+              rows[i].querySelector('.n-rec').value = rData.rec || '';
+            }
+          });
+        }
+      } catch(e) {}
     }
-    runCompleteCalculation(false);
+    calculateAllSections(false);
   };
 </script>
 
