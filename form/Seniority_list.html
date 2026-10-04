@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>प्रारूप-क - परिषदीय सहायक अध्यापकों की वरिष्ठता सूची</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 6mm 6mm 8mm 6mm;
+  }
+  
+  :root {
+    --primary: #1e3a8a;
+    --border-color: #000;
+  }
+
+  body {
+    font-family: 'Noto Sans Devanagari', 'Mangal', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 12px;
+    background-color: #f1f5f9;
+    color: #000;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* स्क्रीन नेविगेशन व एक्शन बार */
+  .no-print {
+    background: #ffffff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .nav-back {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-add { background-color: #15803d; }
+  .btn-save { background-color: #1e3a8a; }
+  .btn-sort { background-color: #d97706; }
+  .btn-export { background-color: #0284c7; }
+  .btn-print { background-color: #334155; }
+  .btn-danger { background-color: #dc2626; padding: 2px 6px; font-size: 10px; }
+
+  /* फॉर्म का दस्तावेजी प्रारूप */
+  .document-sheet {
+    background: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    min-width: 1020px;
+  }
+
+  .header-block {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .header-block h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .header-block h3 {
+    margin: 3px 0 6px 0;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  
+  .meta-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .meta-inputs input {
+    border: none;
+    border-bottom: 1px dotted #000;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    outline: none;
+    background: transparent;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background-color: #fff;
+  }
+
+  thead {
+    display: table-header-group; /* हर प्रिंटेड पेज पर हेडर रिपीट होगा */
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  th, td {
+    border: 1px solid var(--border-color);
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px 2px;
+    font-size: 10px;
+    line-height: 1.15;
+    word-break: break-word;
+  }
+
+  th {
+    font-weight: 700;
+    background-color: #f8fafc;
+  }
+
+  .col-num td {
+    background-color: #f1f5f9;
+    font-weight: bold;
+    height: 16px;
+    font-size: 9px;
+  }
+
+  /* इनपुट फील्ड्स */
+  input[type="text"], select {
+    width: 96%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 10px;
+    text-align: center;
+    outline: none;
+    padding: 2px 0;
+  }
+  input[type="text"]:focus, select:focus {
+    background-color: #e0f2fe;
+    border-radius: 2px;
+  }
+
+  /* हस्ताक्षर ब्लॉक */
+  .signature-block {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 0 40px;
+  }
+  .sign-box {
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  /* प्रिंट मीडिया अनुकूलन */
+  @media print {
+    body {
+      background: #fff;
+      padding: 0;
+    }
+    .no-print, .action-col {
+      display: none !important;
+    }
+    .document-sheet {
+      box-shadow: none;
+      padding: 0;
+      min-width: 100%;
+    }
+    th, .col-num td {
+      background-color: #f5f5f5 !important;
+    }
+    input[type="text"], select {
+      border: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .signature-block {
+      page-break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <a href="../index.html" class="nav-back">&larr; मुख्य डैशबोर्ड</a>
+  <div class="btn-group">
+    <button class="btn btn-add" onclick="addRow()">+ नई पंक्ति जोड़ें</button>
+    <button class="btn btn-sort" onclick="sortSeniority()" title="नियुक्ति तिथि व जन्मतिथि के आधार पर क्रमबद्ध करें">⚡ ऑटो वरिष्ठता क्रम</button>
+    <button class="btn btn-save" onclick="saveData()">💾 डेटा सुरक्षित करें</button>
+    <button class="btn btn-export" onclick="exportToCSV()">📊 Excel Export</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ Print / PDF</button>
+  </div>
+</div>
+
+<div class="document-sheet">
+  <div class="header-block">
+    <h2>प्रारूप–क</h2>
+    <h3>(उत्तर प्रदेश बेसिक शिक्षा परिषद के अधीन प्राथमिक विद्यालयों में कार्यरत सहायक अध्यापकों की वरिष्ठता सूची)</h3>
+  </div>
+
+  <div class="meta-inputs">
+    <div>विकास खंड: <input type="text" id="metaBlock" style="width: 120px;" placeholder="ब्लॉक का नाम"></div>
+    <div>जनपद: <input type="text" id="metaDistrict" style="width: 120px;" placeholder="जनपद का नाम"></div>
+    <div>प्रकाशन / कट-ऑफ दिनांक: <input type="text" id="metaDate" style="width: 90px;" placeholder="DD-MM-YYYY"></div>
+  </div>
+
+  <table id="seniorityTable">
+    <thead>
+      <tr>
+        <!-- चौड़ाई का कुल योग: 3+8+5+8.5+6.5+6+8.5+6.5+9+8.5+8.5+5+4.5+4.5+8 = 100% -->
+        <th rowspan="2" style="width: 3%;">क०<br>सं०</th>
+        <th rowspan="2" style="width: 8%;">अध्यापक<br>का नाम</th>
+        <th rowspan="2" style="width: 5%;">पद<br>नाम</th>
+        <th rowspan="2" style="width: 8.5%;">कार्यरत<br>विद्यालय</th>
+        <th rowspan="2" style="width: 6.5%;">जन्म तिथि<br><span style="font-size: 8px;">(DD-MM-YYYY)</span></th>
+        <th rowspan="2" style="width: 6%;">मानव<br>संपदा कोड</th>
+        <th rowspan="2" style="width: 8.5%;">जनपद में मौलिक नियुक्ति तिथि<br><span style="font-size: 8px;">(आदेश दिनांक)</span></th>
+        <th rowspan="2" style="width: 6.5%;">भर्ती का स्रोत<br><span style="font-size: 8px;">(सीधी/अंतर्जनपदीय)</span></th>
+        <th rowspan="2" style="width: 9%;">अंतर्जनपदीय स्थानान्तरण सचिव परिषद आदेश दिनांक</th>
+        <th rowspan="2" style="width: 8.5%;">भर्ती का नाम/प्रकार<br><span style="font-size: 8px;">(69000/68500 आदि)</span></th>
+        <th rowspan="2" style="width: 8.5%;">प्रथम विद्यालय कार्यभार ग्रहण तिथि</th>
+        <th rowspan="2" style="width: 5%;">TET/CTET<br>(YES/NO)</th>
+        <th colspan="2" style="width: 9%;">TET उत्तीर्ण वर्ष</th>
+        <th rowspan="2" style="width: 8%;">अनुशासनात्मक कार्यवाही/अभ्युक्ति</th>
+        <th rowspan="2" class="action-col no-print" style="width: 35px;">हटाएं</th>
+      </tr>
+      <tr>
+        <th style="width: 4.5%;">प्राथमिक</th>
+        <th style="width: 4.5%;">उच्च प्रा०</th>
+      </tr>
+      <tr class="col-num">
+        <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
+        <td class="action-col no-print">-</td>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <!-- पंक्तियां डायनामिक रूप से लोड होंगी -->
+    </tbody>
+  </table>
+
+  <div class="signature-block">
+    <div class="sign-box">
+      <br><br>
+      हस्ताक्षर पटल सहायक (वरिष्ठता)<br>
+      कार्यालय खंड शिक्षा अधिकारी
+    </div>
+    <div class="sign-box">
+      <br><br>
+      हस्ताक्षर एवं मुहर<br>
+      खंड शिक्षा अधिकारी
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'seniority_list_up_data';
+
+  // पंक्ति जोड़ने का फंक्शन
+  function addRow(data = {}) {
+    const tbody = document.getElementById('tableBody');
+    const tr = document.createElement('tr');
+    
+    tr.innerHTML = `
+      <td class="row-index"></td>
+      <td><input type="text" class="t-name" value="${data.name || ''}" placeholder="नाम"></td>
+      <td><input type="text" class="t-desig" value="${data.desig || 'स०अ०'}"></td>
+      <td><input type="text" class="t-school" value="${data.school || ''}" placeholder="विद्यालय"></td>
+      <td><input type="text" class="t-dob" value="${data.dob || ''}" placeholder="DD-MM-YYYY"></td>
+      <td><input type="text" class="t-ehms" value="${data.ehms || ''}" placeholder="EHMS"></td>
+      <td><input type="text" class="t-doj" value="${data.doj || ''}" placeholder="DD-MM-YYYY"></td>
+      <td>
+        <select class="t-source">
+          <option value="">चुनें</option>
+          <option value="सीधी भर्ती" ${data.source === 'सीधी भर्ती' ? 'selected' : ''}>सीधी भर्ती</option>
+          <option value="अंतर्जनपदीय" ${data.source === 'अंतर्जनपदीय' ? 'selected' : ''}>अंतर्जनपदीय</option>
+          <option value="मृतक आश्रित" ${data.source === 'मृतक आश्रित' ? 'selected' : ''}>मृतक आश्रित</option>
+          <option value="पदोन्नति" ${data.source === 'पदोन्नति' ? 'selected' : ''}>पदोन्नति</option>
+        </select>
+      </td>
+      <td><input type="text" class="t-transfer-date" value="${data.transferDate || ''}" placeholder="DD-MM-YYYY"></td>
+      <td><input type="text" class="t-batch" value="${data.batch || ''}" placeholder="उदा. 69000"></td>
+      <td><input type="text" class="t-join-date" value="${data.joinDate || ''}" placeholder="DD-MM-YYYY"></td>
+      <td>
+        <select class="t-tet">
+          <option value="YES" ${data.tet === 'YES' ? 'selected' : ''}>YES</option>
+          <option value="NO" ${data.tet === 'NO' ? 'selected' : ''}>NO</option>
+        </select>
+      </td>
+      <td><input type="text" class="t-tet-pry" value="${data.tetPry || ''}" placeholder="वर्ष"></td>
+      <td><input type="text" class="t-tet-upr" value="${data.tetUpr || ''}" placeholder="वर्ष"></td>
+      <td><input type="text" class="t-remarks" value="${data.remarks || ''}"></td>
+      <td class="action-col no-print"><button class="btn btn-danger" onclick="deleteRow(this)">✕</button></td>
+    `;
+    
+    tbody.appendChild(tr);
+    reindexRows();
+  }
+
+  // पंक्ति संख्या को स्वतः ठीक करना
+  function reindexRows() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    rows.forEach((row, index) => {
+      row.querySelector('.row-index').innerText = index + 1;
+    });
+  }
+
+  // पंक्ति हटाना
+  function deleteRow(btn) {
+    if(confirm('क्या आप इस अध्यापक का विवरण हटाना चाहते हैं?')) {
+      const row = btn.closest('tr');
+      row.remove();
+      reindexRows();
+      saveData(false);
+    }
+  }
+
+  // डेटा LocalStorage में सुरक्षित करना
+  function saveData(showAlert = true) {
+    const rows = document.querySelectorAll('#tableBody tr');
+    const tableData = [];
+
+    rows.forEach(r => {
+      tableData.push({
+        name: r.querySelector('.t-name').value,
+        desig: r.querySelector('.t-desig').value,
+        school: r.querySelector('.t-school').value,
+        dob: r.querySelector('.t-dob').value,
+        ehms: r.querySelector('.t-ehms').value,
+        doj: r.querySelector('.t-doj').value,
+        source: r.querySelector('.t-source').value,
+        transferDate: r.querySelector('.t-transfer-date').value,
+        batch: r.querySelector('.t-batch').value,
+        joinDate: r.querySelector('.t-join-date').value,
+        tet: r.querySelector('.t-tet').value,
+        tetPry: r.querySelector('.t-tet-pry').value,
+        tetUpr: r.querySelector('.t-tet-upr').value,
+        remarks: r.querySelector('.t-remarks').value
+      });
+    });
+
+    const fullPayload = {
+      block: document.getElementById('metaBlock').value,
+      district: document.getElementById('metaDistrict').value,
+      date: document.getElementById('metaDate').value,
+      records: tableData
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fullPayload));
+    if(showAlert) alert('वरिष्ठता सूची का विवरण ब्राउज़र मेमोरी में सुरक्षित कर दिया गया है!');
+  }
+
+  // तिथि पार्सिंग हेल्पर (DD-MM-YYYY -> Date Object)
+  function parseDate(dateStr) {
+    if(!dateStr || !dateStr.includes('-')) return new Date(9999, 11, 31);
+    const parts = dateStr.trim().split('-');
+    if(parts.length === 3) {
+      return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+    return new Date(9999, 11, 31);
+  }
+
+  // विभागीय नियमानुसार ऑटो वरिष्ठता सॉर्टिंग
+  // नियम: 1. मौलिक नियुक्ति तिथि (Col 7) जो पहले आया वह वरिष्ठ।
+  // नियम 2: नियुक्ति तिथि समान होने पर जन्मतिथि (Col 5) - अधिक आयु वाला वरिष्ठ।
+  function sortSeniority() {
+    const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+    if(rows.length < 2) return;
+
+    rows.sort((a, b) => {
+      const dojA = parseDate(a.querySelector('.t-doj').value);
+      const dojB = parseDate(b.querySelector('.t-doj').value);
+
+      if (dojA.getTime() !== dojB.getTime()) {
+        return dojA - dojB;
+      }
+
+      const dobA = parseDate(a.querySelector('.t-dob').value);
+      const dobB = parseDate(b.querySelector('.t-dob').value);
+      return dobA - dobB; // पूर्व जन्मतिथि (अधिक आयु) पहले
+    });
+
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    rows.forEach(r => tbody.appendChild(r));
+    reindexRows();
+    saveData(false);
+    alert('शिक्षकों की सूची को मौलिक नियुक्ति तिथि एवं जन्मतिथि के अनुसार वरिष्ठता क्रम में व्यवस्थित कर दिया गया है!');
+  }
+
+  // Excel / CSV एक्सपोर्ट
+  function exportToCSV() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    let csv = "क.सं.,अध्यापक का नाम,पदनाम,कार्यरत विद्यालय,जन्म तिथि,मानव संपदा कोड,जनपद में प्रथम नियुक्ति तिथि,भर्ती स्रोत,स्थानांतरण आदेश दिनांक,भर्ती का नाम,प्रथम कार्यभार ग्रहण तिथि,TET स्थिति,TET प्रा.,TET उच्च प्रा.,अभ्युक्ति\n";
+
+    rows.forEach((r, idx) => {
+      const getVal = cls => `"${(r.querySelector(cls).value || '').replace(/"/g, '""')}"`;
+      csv += `${idx + 1},${getVal('.t-name')},${getVal('.t-desig')},${getVal('.t-school')},${getVal('.t-dob')},${getVal('.t-ehms')},${getVal('.t-doj')},${getVal('.t-source')},${getVal('.t-transfer-date')},${getVal('.t-batch')},${getVal('.t-join-date')},${getVal('.t-tet')},${getVal('.t-tet-pry')},${getVal('.t-tet-upr')},${getVal('.t-remarks')}\n`;
+    });
+
+    const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `Seniority_List_Format_A_${document.getElementById('metaBlock').value || 'Block'}.csv`;
+    link.click();
+  }
+
+  // पेज लोड होने पर डेटा रीस्टोर
+  window.onload = function() {
+    // 1. डैशबोर्ड की सामान्य विद्यालय/ब्लॉक प्रोफाइल से लिंक
+    const commonMeta = localStorage.getItem('school_common_meta');
+    if(commonMeta) {
+      const parsedCommon = JSON.parse(commonMeta);
+      if(parsedCommon.block) document.getElementById('metaBlock').value = parsedCommon.block;
+    }
+
+    // 2. वरिष्ठता सूची का सेव किया हुआ डेटा लोड करना
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved) {
+      const data = JSON.parse(saved);
+      if(data.block) document.getElementById('metaBlock').value = data.block;
+      if(data.district) document.getElementById('metaDistrict').value = data.district;
+      if(data.date) document.getElementById('metaDate').value = data.date;
+
+      if(data.records && data.records.length > 0) {
+        data.records.forEach(rec => addRow(rec));
+        return;
+      }
+    }
+
+    // कोई डेटा न होने पर डिफ़ॉल्ट 3 खाली पंक्तियां बनाना
+    addRow();
+    addRow();
+    addRow();
+  };
+</script>
+
+</body>
+</html>

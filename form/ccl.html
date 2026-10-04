@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ऑनलाइन अवकाश प्रार्थना पत्र (CCL / मातृत्व / अन्य)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 5mm 8mm;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
+    font-size: 8.8pt;
+    line-height: 1.15;
+    color: #000;
+    background-color: #cbd5e1;
+    margin: 0;
+    padding: 10px 0;
+  }
+  
+  .no-print-bar {
+    max-width: 210mm;
+    margin: 0 auto 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .nav-back {
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .btn-group {
+    display: flex;
+    gap: 8px;
+  }
+  .btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+  }
+  .btn-save { background: #1e3a8a; }
+  .btn-print { background: #0284c7; }
+  .btn-reset { background: #dc2626; }
+
+  .page {
+    width: 210mm;
+    min-height: 287mm;
+    background: #fff;
+    margin: 0 auto 15px auto;
+    padding: 5mm 8mm;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    position: relative;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child {
+    page-break-after: avoid;
+    break-after: avoid;
+    margin-bottom: 0;
+  }
+
+  .header {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .header h3 {
+    margin: 0;
+    font-size: 10pt;
+    color: #111;
+  }
+  .header h2 {
+    margin: 2px 0 4px 0;
+    font-size: 12.2pt;
+    text-decoration: underline;
+  }
+
+  /* फोटो बॉक्स */
+  .photo-container {
+    float: right;
+    width: 75px;
+    height: 85px;
+    border: 1px dashed #555;
+    text-align: center;
+    font-size: 8pt;
+    color: #666;
+    margin-left: 8px;
+    margin-bottom: 2px;
+    background: #fafafa;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  /* हस्ताक्षर एवं बड़ा मोहर कंटेनर */
+  .sign-box {
+    width: 145px;
+    height: 38px;
+    border: 1px dashed #666;
+    background: #fafafa;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7.5pt;
+    color: #555;
+    margin: 0 auto 1px auto;
+  }
+  .stamp-box {
+    width: 145px;
+    height: 52px;
+    border: 1px dashed #666;
+    background: #fafafa;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7.5pt;
+    color: #555;
+    margin: 2px auto 0 auto;
+  }
+  .sign-box img, .stamp-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+  }
+  .sign-box:hover, .stamp-box:hover, .photo-container:hover {
+    border-color: #0284c7;
+    background: #f0f7ff;
+  }
+
+  /* फॉन्ट व इनपुट स्टाइल */
+  .input-line, .table-input, select.input-line {
+    font-family: 'Kalam', cursive, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 10.5pt !important;
+    color: #0d2b7a !important;
+    letter-spacing: 0.2px;
+  }
+  
+  .input-line {
+    border: none;
+    border-bottom: 1.2px dotted #333;
+    padding: 0 3px;
+    background: transparent;
+    outline: none;
+    min-width: 30px;
+  }
+  .input-line:focus {
+    border-bottom: 1.5px solid #0284c7;
+    background: #f0f7ff;
+  }
+  
+  .table-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 1px 2px;
+  }
+  .table-input:focus {
+    background: #f0f7ff;
+  }
+
+  .row {
+    margin: 2px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .row b {
+    flex-shrink: 0;
+    font-size: 8.8pt;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2px 0;
+    font-size: 8.4pt;
+  }
+  table, th, td {
+    border: 1px solid #000;
+  }
+  th, td {
+    padding: 1.5px 3px;
+    text-align: left;
+  }
+  th {
+    background-color: #f1f5f9;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .section-title {
+    font-weight: bold;
+    margin-top: 3px;
+    margin-bottom: 1px;
+    font-size: 8.8pt;
+  }
+  .box-container {
+    border: 1px solid #000;
+    padding: 3px 6px;
+    margin: 2.5px 0;
+    font-size: 8.4pt;
+    line-height: 1.25;
+  }
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  @media print {
+    body {
+      background: none;
+      padding: 0;
+      margin: 0;
+    }
+    .no-print-bar {
+      display: none !important;
+    }
+    .page {
+      width: 100%;
+      height: 100%;
+      min-height: 285mm;
+      max-height: 290mm;
+      margin: 0;
+      padding: 3mm 6mm;
+      box-shadow: none;
+    }
+    .input-line:focus, .table-input:focus {
+      background: transparent;
+    }
+    .sign-box, .stamp-box, .photo-container {
+      border: 1px solid transparent;
+      background: transparent;
+    }
+    .upload-text {
+      display: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print-bar">
+  <a href="../index.html" class="nav-back">&larr; मुख्य डैशबोर्ड</a>
+  <div class="btn-group">
+    <button class="btn btn-save" onclick="saveAllData()">💾 डेटा व फोटो सेव करें</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ 2 पेज प्रिंट / PDF</button>
+    <button class="btn btn-reset" onclick="resetAll()">🔄 रीसेट</button>
+  </div>
+</div>
+
+<!-- ==================== पेज 1 ==================== -->
+<div class="page">
+  <div class="header">
+    <h3>बेसिक शिक्षा परिषदीय विद्यालयों में कार्यरत शिक्षकों एवं कर्मचारियों के लिए</h3>
+    <h2>ऑनलाइन अवकाश हेतु प्रार्थना पत्र</h2>
+  </div>
+
+  <div class="photo-container" onclick="document.getElementById('photoInput').click()" title="पासपोर्ट फोटो अपलोड करें">
+    <span class="upload-text">फोटो अपलोड</span>
+    <img id="photoPreview" alt="आवेदक फोटो">
+    <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'photoPreview', 'saved_photo')">
+  </div>
+
+  <div style="width: calc(100% - 85px);">
+    <div class="row">
+      <b>1- आवेदक/आवेदिका का नाम-</b>
+      <input type="text" id="teacherName" class="input-line" style="flex: 2;" oninput="syncFields()">
+      <b>पद-</b>
+      <input type="text" id="teacherDesig" class="input-line" style="flex: 1.2;">
+    </div>
+    
+    <div class="row">
+      <b>2- EHRMS (मानव सम्पदा) कोड-</b>
+      <input type="text" id="ehmsCode" class="input-line" style="flex: 1.2;" oninput="syncFields()">
+      <b style="margin-left: 6px;">3- मोबाइल नम्बर-</b>
+      <input type="tel" id="mobileNo" class="input-line" maxlength="10" style="flex: 1.2;">
+    </div>
+
+    <div class="row">
+      <b>4- विद्यालय का नाम-</b>
+      <input type="text" id="schoolName" class="input-line" style="flex: 2;">
+      <b>5- यू-डाइस कोड-</b>
+      <input type="text" id="udiseCode" class="input-line" style="flex: 1.2;">
+    </div>
+    <div class="row">
+      <b>6- विकास क्षेत्र-</b>
+      <input type="text" id="blockName" class="input-line" style="flex: 1.5;" oninput="syncFields()">
+      <b>7- जन्म तिथि-</b>
+      <input type="text" id="dob" class="input-line text-center" placeholder="DD/MM/YYYY" style="flex: 1.2;">
+    </div>
+    <div class="row">
+      <b>8- प्रथम नियुक्ति तिथि-</b>
+      <input type="text" id="doj" class="input-line text-center" placeholder="DD/MM/YYYY" style="flex: 1.2;">
+      <b>9- स्थायी होने की तिथि-</b>
+      <input type="text" id="confirmDate" class="input-line text-center" placeholder="DD/MM/YYYY" style="flex: 1.2;">
+    </div>
+  </div>
+
+  <div class="section-title">10- अब तक उपभोग किए गए कुल अवकाश का विवरण-</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40%;">अवकाश की प्रकृति</th>
+        <th>उपभोग किए गए दिनों की संख्या</th>
+        <th>अवशेष दिनों की संख्या</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>मेडिकल अवकाश</td><td><input type="text" id="med_used" class="table-input text-center"></td><td><input type="text" id="med_bal" class="table-input text-center"></td></tr>
+      <tr><td>बाल्य देख भाल अवकाश (CCL)</td><td><input type="text" id="ccl_used" class="table-input text-center"></td><td><input type="text" id="ccl_bal" class="table-input text-center"></td></tr>
+      <tr><td>प्रसूति अवकाश</td><td><input type="text" id="mat_used" class="table-input text-center"></td><td><input type="text" id="mat_bal" class="table-input text-center"></td></tr>
+      <tr><td>गर्भपात अवकाश</td><td><input type="text" id="ab_used" class="table-input text-center"></td><td><input type="text" id="ab_bal" class="table-input text-center"></td></tr>
+      <tr><td>अर्जित / उपार्जित अवकाश</td><td><input type="text" id="el_used" class="table-input text-center"></td><td><input type="text" id="el_bal" class="table-input text-center"></td></tr>
+      <tr><td>आकस्मिक अवकाश (CL)</td><td><input type="text" id="cl_used" class="table-input text-center"></td><td><input type="text" id="cl_bal" class="table-input text-center"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">11- सबसे बड़े दो जीवित संतानों का विवरण (CCL / प्रसूति / गर्भपात अवकाश की स्थिति में अनिवार्य)-</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:4%;">क्र०</th>
+        <th style="width:20%;">सन्तान का नाम</th>
+        <th style="width:13%;">जन्म तिथि</th>
+        <th style="width:28%;">जन्म प्रमाण पत्र क्रमांक व जारी तिथि</th>
+        <th style="width:20%;">जारी करने वाले का पद</th>
+        <th style="width:15%;">आवेदन पर उम्र</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center">1</td>
+        <td><input type="text" id="ch1_name" class="table-input"></td>
+        <td><input type="text" id="ch1_dob" class="table-input text-center" placeholder="DD/MM/YYYY"></td>
+        <td>
+          <input type="text" id="ch1_cert" class="table-input" placeholder="प्रमाण पत्र क्र०" style="border-bottom: 1px dotted #888;">
+          <div style="display:flex; align-items:center; font-size:7.5pt; margin-top:1px;">
+            <span>दिनांक:</span>
+            <input type="text" id="ch1_cert_dt" class="table-input text-center" placeholder="DD/MM/YYYY">
+          </div>
+        </td>
+        <td><input type="text" id="ch1_auth" class="table-input"></td>
+        <td><input type="text" id="ch1_age" class="table-input text-center"></td>
+      </tr>
+      <tr>
+        <td class="text-center">2</td>
+        <td><input type="text" id="ch2_name" class="table-input"></td>
+        <td><input type="text" id="ch2_dob" class="table-input text-center" placeholder="DD/MM/YYYY"></td>
+        <td>
+          <input type="text" id="ch2_cert" class="table-input" placeholder="प्रमाण पत्र क्र०" style="border-bottom: 1px dotted #888;">
+          <div style="display:flex; align-items:center; font-size:7.5pt; margin-top:1px;">
+            <span>दिनांक:</span>
+            <input type="text" id="ch2_cert_dt" class="table-input text-center" placeholder="DD/MM/YYYY">
+          </div>
+        </td>
+        <td><input type="text" id="ch2_auth" class="table-input"></td>
+        <td><input type="text" id="ch2_age" class="table-input text-center"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row">
+    <b>12- मांगे जा रहे अवकाश का प्रकार-</b>
+    <select id="leaveType" class="input-line" style="flex:1;">
+      <option value="बाल्य देखभाल अवकाश (CCL)">बाल्य देखभाल अवकाश (CCL)</option>
+      <option value="प्रसूति अवकाश">प्रसूति अवकाश</option>
+      <option value="गर्भपात अवकाश">गर्भपात अवकाश</option>
+      <option value="चिकित्सा (मेडिकल) अवकाश">चिकित्सा (मेडिकल) अवकाश</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <b>13- अवकाश की अवधि:</b> दिनांक
+    <input type="date" id="leaveFrom" class="input-line" style="font-size:9pt !important;" onchange="calculateDays()">
+    से दिनांक
+    <input type="date" id="leaveTo" class="input-line" style="font-size:9pt !important;" onchange="calculateDays()">
+    तक कुल
+    <input type="text" id="totalDays" class="input-line text-center" style="width:40px;">
+    दिन
+  </div>
+
+  <div class="section-title">14- विशेष विवरण:</div>
+  <table>
+    <tr>
+      <th style="width:50%;">बाल्य देख भाल अवकाश (CCL) हेतु</th>
+      <th style="width:50%;">प्रसूति अवकाश हेतु</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        संतान का नाम जिसके लिए अवकाश अपेक्षित है:<br>
+        <input type="text" id="ccl_target_child" class="table-input" style="border-bottom:1px dotted #777;"><br>
+        <b>अवकाश मांगे जाने का कारण:</b>
+        <label><input type="radio" name="ccl_reason" value="बीमारी"> बीमारी</label> &nbsp;
+        <label><input type="radio" name="ccl_reason" value="परीक्षा"> परीक्षा</label>
+      </td>
+      <td style="vertical-align: top;">
+        सन्तान का क्रम जिसके लिए प्रसूति अवकाश की माँग है:<br>
+        <label><input type="radio" name="mat_order" value="प्रथम"> प्रथम</label> &nbsp;
+        <label><input type="radio" name="mat_order" value="द्वितीय"> द्वितीय</label><br>
+        <b>प्रसव की संभावित तिथि:</b><br>
+        <input type="text" id="edd_date" class="table-input" placeholder="DD/MM/YYYY" style="border-bottom:1px dotted #777;">
+      </td>
+    </tr>
+  </table>
+
+  <div class="row">
+    <b>15- अवकाश की अवधि में पत्राचार का पता-</b>
+    <input type="text" id="leaveAddress" class="input-line" style="flex:1;">
+  </div>
+
+  <div class="box-container">
+    <b>शपथ पत्र / घोषणा:</b> मैं <input type="text" id="affidavitName" class="input-line" style="width: 200px;"> प्रमाणित करता/करती हूँ कि उपरोक्त क्रमांक 1 से 15 तक की सभी सूचनाएँ सत्य हैं एवं किसी भी तथ्य का गोपन नहीं किया गया है।
+    <div class="flex-between" style="margin-top: 2px;">
+      <div>दिनांक: <input type="text" id="applyDate" class="input-line" placeholder="DD/MM/YYYY" style="width:85px;"><br>स्थान: <input type="text" id="applyPlace" class="input-line" style="width:90px;"></div>
+      
+      <div style="text-align:center;">
+        <div class="sign-box" onclick="document.getElementById('signAavedak1').click()" title="आवेदक हस्ताक्षर">
+          <span class="upload-text">हस्ताक्षर अपलोड</span>
+          <img id="signAavedak1Prev" alt="आवेदक हस्ताक्षर">
+          <input type="file" id="signAavedak1" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'signAavedak1Prev', 'saved_sign_aavedak')">
+        </div>
+        <b>हस्ताक्षर आवेदक / आवेदिका</b>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px dashed #000; padding-top:2px; margin-top:2px;">
+    <b>प्रधानाध्यापक की संस्तुति / आख्या:</b>
+    छात्र सं०- <input type="text" id="stat_students" class="input-line text-center" style="width:35px;">
+    स०अ०- <input type="text" id="stat_teachers" class="input-line text-center" style="width:28px;">
+    शिक्षामित्र- <input type="text" id="stat_sm" class="input-line text-center" style="width:28px;">
+    अनुदेशक- <input type="text" id="stat_ins" class="input-line text-center" style="width:28px;"><br>
+    अवकाश पर चल रहे शिक्षक व प्रकार: <input type="text" id="on_leave_staff" class="input-line" style="width:68%;">
+    
+    <div class="flex-between" style="margin-top:1px;">
+      <div>
+        प्र०अ० नाम व पद: <input type="text" id="hm_name" class="input-line" style="width:150px;"><br>
+        दिनांक: <input type="text" id="hm_date" class="input-line" placeholder="DD/MM/YYYY" style="width:85px;">
+      </div>
+      
+      <!-- हस्ताक्षर के ठीक नीचे मोहर (Vertical Stack) -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+        <div style="text-align:center;">
+          <div class="sign-box" onclick="document.getElementById('signHM1').click()" title="प्र०अ० हस्ताक्षर">
+            <span class="upload-text">हस्ताक्षर प्र०अ०</span>
+            <img id="signHM1Prev" alt="प्र०अ० हस्ताक्षर">
+            <input type="file" id="signHM1" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'signHM1Prev', 'saved_sign_hm')">
+          </div>
+          <b>हस्ताक्षर प्र०अ०</b>
+        </div>
+        
+        <div style="text-align:center;">
+          <div class="stamp-box" onclick="document.getElementById('stampHM1').click()" title="विद्यालय मोहर">
+            <span class="upload-text">मोहर अपलोड</span>
+            <img id="stampHM1Prev" alt="विद्यालय मोहर">
+            <input type="file" id="stampHM1" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'stampHM1Prev', 'saved_stamp_hm')">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== पेज 2 (बीईओ प्रारूप - पूर्णतः एडिटेबल) ==================== -->
+<div class="page">
+  <div class="header">
+    <h2 style="font-size:12.5pt; margin-bottom: 2px;">
+      कार्यालय खण्ड शिक्षा अधिकारी, 
+      <input type="text" id="p2_block" class="input-line text-center" value="बघरा" style="width:120px; font-size:12.5pt !important;" oninput="syncPage2BlockDist()"> 
+      (<input type="text" id="p2_district" class="input-line text-center" value="मुजफ्फरनगर" style="width:130px; font-size:12.5pt !important;" oninput="syncPage2BlockDist()">)
+    </h2>
+    <div style="display:flex; justify-content:space-between; font-weight:normal; font-size:9pt; margin-top:3px;">
+      <span>पत्रांकः <input type="text" id="letterNo" class="input-line text-center" value="239" style="width:45px;"> / अवकाश / सत्र: <input type="text" id="sessionYear" class="input-line text-center" value="2026-27" style="width:70px;"></span>
+      <span>दिनांक:- <input type="text" id="letterDate" class="input-line text-center" style="width:90px;" placeholder="DD/MM/YYYY"></span>
+    </div>
+  </div>
+
+  <div style="margin: 3px 0; font-size:9pt;">
+    सेवा में,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;समस्त प्र०अ० / इ०अ० / महिला स०अ०,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;विकास खण्ड 
+    <input type="text" id="p2_block_sub" class="input-line text-center" value="बघरा" style="width:110px;">, 
+    <input type="text" id="p2_district_sub" class="input-line text-center" value="मुजफ्फरनगर" style="width:120px;">।
+  </div>
+
+  <div class="row" style="font-weight:bold; font-size:9pt;">
+    विषयः- बाल्य देखभाल अवकाश / मातृत्व अवकाश आवेदन के साथ सूचना संलग्न करने के सम्बन्ध में।
+  </div>
+
+  <p style="text-indent: 20px; margin: 3px 0; font-size:8.8pt;">
+    उपरोक्त विषयक समस्त महिला अध्यापकों के द्वारा बाल्य देखभाल अवकाश/मातृत्व अवकाश आवेदन के साथ निम्न प्रारूप पर सूचना संलग्न करना अनिवार्य होगा।
+  </p>
+
+  <div class="section-title" style="margin-top:4px;">प्रारूप-1 (बाल्य देखभाल अवकाश)</div>
+  <div class="row">
+    <b>आवेदन करने वाली अध्यापिका का नाम:-</b> <input type="text" id="teacherNameP2" class="input-line" style="flex: 1.5;">
+    <b style="margin-left:8px;">मानव संपदा कोड:-</b> <input type="text" id="ehmsCodeP2" class="input-line" style="flex: 1;">
+  </div>
+
+  <div class="section-title" style="font-size:8.8pt; margin-top:2px;">आवेदिका के समस्त संतानों का विवरण:</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:5%;">क्र०</th>
+        <th style="width:34%;">नाम पुत्र/पुत्री</th>
+        <th style="width:12%;">लिंग</th>
+        <th style="width:12%;">आयु</th>
+        <th style="width:16%;">जन्मतिथि</th>
+        <th>अन्य विवरण</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="text-center">01</td><td><input type="text" id="all_ch1" class="table-input"></td><td><input type="text" id="all_ch1_g" class="table-input text-center"></td><td><input type="text" id="all_ch1_a" class="table-input text-center"></td><td><input type="text" id="all_ch1_d" class="table-input text-center"></td><td><input type="text" id="all_ch1_r" class="table-input"></td></tr>
+      <tr><td class="text-center">02</td><td><input type="text" id="all_ch2" class="table-input"></td><td><input type="text" id="all_ch2_g" class="table-input text-center"></td><td><input type="text" id="all_ch2_a" class="table-input text-center"></td><td><input type="text" id="all_ch2_d" class="table-input text-center"></td><td><input type="text" id="all_ch2_r" class="table-input"></td></tr>
+      <tr><td class="text-center">03</td><td><input type="text" id="all_ch3" class="table-input"></td><td><input type="text" id="all_ch3_g" class="table-input text-center"></td><td><input type="text" id="all_ch3_a" class="table-input text-center"></td><td><input type="text" id="all_ch3_d" class="table-input text-center"></td><td><input type="text" id="all_ch3_r" class="table-input"></td></tr>
+      <tr><td class="text-center">04</td><td><input type="text" id="all_ch4" class="table-input"></td><td><input type="text" id="all_ch4_g" class="table-input text-center"></td><td><input type="text" id="all_ch4_a" class="table-input text-center"></td><td><input type="text" id="all_ch4_d" class="table-input text-center"></td><td><input type="text" id="all_ch4_r" class="table-input"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title" style="margin-top:6px;">प्रारूप-2</div>
+  <div class="row" style="font-weight:bold;">
+    वर्ष <input type="text" id="currCalYear" class="input-line text-center" value="2026" style="width:50px;"> में आवेदन दिनांक तक लिए गये कुल बाल्य देखभाल अवकाश (CCL):
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:8%;">क्र०सं०</th>
+        <th style="width:48%;">अवधि (कब से कब तक)</th>
+        <th style="width:16%;">कुल दिन</th>
+        <th>आदेश संख्या / अभ्युक्ति</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="text-center">01</td><td><input type="text" id="ccl_hist1_dur" class="table-input"></td><td><input type="text" id="ccl_hist1_days" class="table-input text-center"></td><td><input type="text" id="ccl_hist1_rem" class="table-input"></td></tr>
+      <tr><td class="text-center">02</td><td><input type="text" id="ccl_hist2_dur" class="table-input"></td><td><input type="text" id="ccl_hist2_days" class="table-input text-center"></td><td><input type="text" id="ccl_hist2_rem" class="table-input"></td></tr>
+      <tr><td class="text-center">03</td><td><input type="text" id="ccl_hist3_dur" class="table-input"></td><td><input type="text" id="ccl_hist3_days" class="table-input text-center"></td><td><input type="text" id="ccl_hist3_rem" class="table-input"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="flex-between" style="margin-top: 25px; padding: 0 20px;">
+    <!-- हस्ताक्षर के ठीक नीचे मोहर -->
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+      <div style="text-align:center;">
+        <div class="sign-box" onclick="document.getElementById('signHM2').click()">
+          <span class="upload-text">हस्ताक्षर प्र०अ०</span>
+          <img id="signHM2Prev" alt="प्र०अ० हस्ताक्षर">
+          <input type="file" id="signHM2" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'signHM2Prev', 'saved_sign_hm')">
+        </div>
+        <b>हस्ताक्षर प्र०अ० / इ०अ०</b>
+      </div>
+
+      <div style="text-align:center;">
+        <div class="stamp-box" onclick="document.getElementById('stampHM2').click()">
+          <span class="upload-text">मोहर अपलोड</span>
+          <img id="stampHM2Prev" alt="मोहर">
+          <input type="file" id="stampHM2" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'stampHM2Prev', 'saved_stamp_hm')">
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <div class="sign-box" onclick="document.getElementById('signAavedak2').click()" style="width:140px;">
+        <span class="upload-text">हस्ताक्षर आवेदिका</span>
+        <img id="signAavedak2Prev" alt="आवेदिका हस्ताक्षर">
+        <input type="file" id="signAavedak2" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'signAavedak2Prev', 'saved_sign_aavedak')">
+      </div>
+      <b>हस्ताक्षर आवेदिका</b>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'ccl_full_form_data';
+
+  // 1. दोनों पेजों के बीच डेटा सिंक
+  function syncFields() {
+    const tName = document.getElementById('teacherName').value;
+    const ehms = document.getElementById('ehmsCode').value;
+    const blk = document.getElementById('blockName').value;
+
+    document.getElementById('teacherNameP2').value = tName;
+    document.getElementById('affidavitName').value = tName;
+    document.getElementById('ehmsCodeP2').value = ehms;
+
+    if(blk) {
+      document.getElementById('p2_block').value = blk;
+      document.getElementById('p2_block_sub').value = blk;
+    }
+
+    const ch1 = document.getElementById('ch1_name').value;
+    const targetChild = document.getElementById('ccl_target_child');
+    if(ch1 && !targetChild.value) {
+      targetChild.value = ch1;
+    }
+  }
+
+  // पेज 2 के ब्लॉक और जिले को सिंक करना
+  function syncPage2BlockDist() {
+    const b = document.getElementById('p2_block').value;
+    const d = document.getElementById('p2_district').value;
+    document.getElementById('p2_block_sub').value = b;
+    document.getElementById('p2_district_sub').value = d;
+  }
+
+  // 2. अवकाश के दिनों की स्वतः गणना
+  function calculateDays() {
+    const fromVal = document.getElementById('leaveFrom').value;
+    const toVal = document.getElementById('leaveTo').value;
+    if(fromVal && toVal) {
+      const d1 = new Date(fromVal);
+      const d2 = new Date(toVal);
+      if(d2 >= d1) {
+        const diffTime = Math.abs(d2 - d1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        document.getElementById('totalDays').value = diffDays;
+      }
+    }
+  }
+
+  // 3. इमेज अपलोड व बेस64 स्टोरेज
+  function handleImageUpload(event, previewId, storageKey) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Str = e.target.result;
+        displayImage(previewId, base64Str);
+        localStorage.setItem(storageKey, base64Str);
+        
+        if(storageKey === 'saved_sign_hm') {
+          displayImage('signHM1Prev', base64Str);
+          displayImage('signHM2Prev', base64Str);
+        } else if(storageKey === 'saved_stamp_hm') {
+          displayImage('stampHM1Prev', base64Str);
+          displayImage('stampHM2Prev', base64Str);
+        } else if(storageKey === 'saved_sign_aavedak') {
+          displayImage('signAavedak1Prev', base64Str);
+          displayImage('signAavedak2Prev', base64Str);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function displayImage(imgId, src) {
+    const el = document.getElementById(imgId);
+    if(el) {
+      el.src = src;
+      el.style.display = 'block';
+      const text = el.parentElement.querySelector('.upload-text');
+      if (text) text.style.display = 'none';
+    }
+  }
+
+  // 4. समस्त डेटा सुरक्षित करना
+  function saveAllData() {
+    const inputs = document.querySelectorAll('input:not([type="file"]), select');
+    const formData = {};
+    inputs.forEach(el => {
+      if(el.type === 'radio') {
+        if(el.checked) formData[el.name] = el.value;
+      } else {
+        if(el.id) formData[el.id] = el.value;
+      }
+    });
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    alert('प्रार्थना पत्र का समस्त विवरण, मोहर व हस्ताक्षर सुरक्षित कर लिए गए हैं!');
+  }
+
+  // 5. डेटा रीस्टोर
+  window.onload = function() {
+    const commonMeta = localStorage.getItem('school_common_meta');
+    if(commonMeta) {
+      const meta = JSON.parse(commonMeta);
+      if(meta.name && !document.getElementById('schoolName').value) document.getElementById('schoolName').value = meta.name;
+      if(meta.udise && !document.getElementById('udiseCode').value) document.getElementById('udiseCode').value = meta.udise;
+      if(meta.block && !document.getElementById('blockName').value) {
+        document.getElementById('blockName').value = meta.block;
+        document.getElementById('p2_block').value = meta.block;
+        document.getElementById('p2_block_sub').value = meta.block;
+      }
+    }
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      for (let k in data) {
+        const el = document.getElementById(k);
+        if (el) {
+          el.value = data[k];
+        } else {
+          const radio = document.querySelector(`input[name="${k}"][value="${data[k]}"]`);
+          if(radio) radio.checked = true;
+        }
+      }
+    }
+
+    const photo = localStorage.getItem('saved_photo');
+    if(photo) displayImage('photoPreview', photo);
+
+    const signHM = localStorage.getItem('saved_sign_hm');
+    if(signHM) {
+      displayImage('signHM1Prev', signHM);
+      displayImage('signHM2Prev', signHM);
+    }
+
+    const stampHM = localStorage.getItem('saved_stamp_hm');
+    if(stampHM) {
+      displayImage('stampHM1Prev', stampHM);
+      displayImage('stampHM2Prev', stampHM);
+    }
+
+    const signAavedak = localStorage.getItem('saved_sign_aavedak');
+    if(signAavedak) {
+      displayImage('signAavedak1Prev', signAavedak);
+      displayImage('signAavedak2Prev', signAavedak);
+    }
+
+    syncFields();
+  };
+
+  // 6. रीसेट
+  function resetAll() {
+    if(confirm('क्या आप फॉर्म का समस्त डेटा और अपलोड की गई मोहर/हस्ताक्षर खाली करना चाहते हैं?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('saved_photo');
+      localStorage.removeItem('saved_sign_hm');
+      localStorage.removeItem('saved_stamp_hm');
+      localStorage.removeItem('saved_sign_aavedak');
+      location.reload();
+    }
+  }
+</script>
+
+</body>
+</html>

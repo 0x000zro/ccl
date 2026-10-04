@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>बेसिक शिक्षा - विद्यालयी अभिलेख पोर्टल</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --surface: #ffffff;
+            --bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: var(--bg); color: var(--text-main); padding: 24px 16px; }
+        .wrapper { max-width: 1100px; margin: 0 auto; }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #172554);
+            color: white;
+            padding: 30px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+        }
+        header h1 { font-size: 26px; margin-bottom: 6px; }
+        header p { color: #93c5fd; font-size: 14px; }
+
+        .school-bar {
+            background: var(--surface);
+            padding: 16px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .school-bar input {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            width: 100%;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .section-header h2 { font-size: 18px; color: var(--primary); }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-light);
+        }
+        .badge {
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .badge-mdm { background: #fef3c7; color: #b45309; }
+        .badge-staff { background: #e0e7ff; color: #4338ca; }
+        .badge-leave { background: #dcfce7; color: #15803d; }
+        .badge-new { background: #f3e8ff; color: #7e22ce; }
+
+        .card h3 { font-size: 16px; margin-bottom: 8px; color: #1e293b; }
+        .card p { font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 16px; }
+        .card .btn-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-light);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <h1>बेसिक शिक्षा विभाग - विद्यालयी प्रपत्र केंद्र</h1>
+        <p>समस्त मासिक, त्रैमासिक एवं वार्षिक विभागीय आख्या हेतु एकीकृत पोर्टल</p>
+    </header>
+
+    <!-- सामान्य विद्यालय प्रोफ़ाइल (स्थानीय स्तर पर साझा करने योग्य) -->
+    <div class="school-bar">
+        <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">विद्यालय का नाम</label>
+            <input type="text" id="schName" placeholder="उदा. प्रा० वि० ..." oninput="saveSchoolMeta()">
+        </div>
+        <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">U-DISE कोड</label>
+            <input type="text" id="schUdise" placeholder="11 अंकीय कोड" oninput="saveSchoolMeta()">
+        </div>
+        <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">विकास खंड / ब्लॉक</label>
+            <input type="text" id="schBlock" placeholder="ब्लॉक का नाम" oninput="saveSchoolMeta()">
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>उपलब्ध एडिटेबल प्रपत्र (Forms Hub)</h2>
+    </div>
+
+    <div class="cards-grid">
+        <!-- MDM Monthly -->
+        <a href="form/mdm_monthly.html" class="card">
+            <div>
+                <span class="badge badge-mdm">एमडीएम</span>
+                <h3>मासिक एमडीएम रिपोर्ट</h3>
+                <p>मासिक राशन उपभोग, परिवर्तन लागत (Conversion Cost), छात्र उपस्थिति एवं खाद्यान्न अवशेष विवरण।</p>
+            </div>
+            <span class="btn-link">फॉर्म खोलें &rarr;</span>
+        </a>
+
+        <!-- MDM Yearly -->
+        <a href="form/mdm_yearly.html" class="card">
+            <div>
+                <span class="badge badge-mdm">एमडीएम</span>
+                <h3>वार्षिक एमडीएम संकलन</h3>
+                <p>वार्षिक वित्तीय लेखा-जोखा, कुल उपभोग, स्टॉक रजिस्टर एवं ऑडिट आख्या हेतु संकलित प्रपत्र।</p>
+            </div>
+            <span class="btn-link">फॉर्म खोलें &rarr;</span>
+        </a>
+
+        <!-- Seniority List -->
+        <a href="form/Seniority_list.html" class="card">
+            <div>
+                <span class="badge badge-staff">कार्मिक</span>
+                <h3>शिक्षक वरिष्ठता सूची</h3>
+                <p>मानव संपदा कोड, मौलिक नियुक्ति तिथि, पदोन्नति विवरण और विद्यालयवार शिक्षक वरिष्ठता प्रपत्र।</p>
+            </div>
+            <span class="btn-link">फॉर्म खोलें &rarr;</span>
+        </a>
+
+        <!-- CCL Form -->
+        <a href="form/ccl.html" class="card">
+            <div>
+                <span class="badge badge-leave">अवकाश</span>
+                <h3>बाल्य देखभाल अवकाश (CCL)</h3>
+                <p>महिला शिक्षिकाओं के लिए CCL आवेदन पत्र, संलग्नक चेकलिस्ट और उपभोग रजिस्टर का प्रारूप।</p>
+            </div>
+            <span class="btn-link">फॉर्म खोलें &rarr;</span>
+        </a>
+
+        <!-- Placeholder for New Forms -->
+        <div class="card" style="border-style: dashed; background: transparent;">
+            <div>
+                <span class="badge badge-new">नया जोड़ें</span>
+                <h3>+ नया फॉर्म जोड़ें</h3>
+                <p>`form/` फोल्डर में नई HTML फाइल बनाएं और इस डैशबोर्ड में उसका लिंक जोड़ें।</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function saveSchoolMeta() {
+        const meta = {
+            name: document.getElementById('schName').value,
+            udise: document.getElementById('schUdise').value,
+            block: document.getElementById('schBlock').value
+        };
+        localStorage.setItem('school_common_meta', JSON.stringify(meta));
+    }
+
+    window.onload = function() {
+        const saved = localStorage.getItem('school_common_meta');
+        if (saved) {
+            const data = JSON.parse(saved);
+            document.getElementById('schName').value = data.name || '';
+            document.getElementById('schUdise').value = data.udise || '';
+            document.getElementById('schBlock').value = data.block || '';
+        }
+    };
+</script>
+
+</body>
+</html>

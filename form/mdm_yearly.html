@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>वार्षिक एमडीएम सूचना प्रपत्र 2025-2026</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 6mm;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, 'Noto Sans Devanagari', Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-size: 11px;
+  }
+
+  .no-print {
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .nav-back {
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .btn-group { display: flex; gap: 8px; }
+  .btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  .btn-save { background-color: #1e3a8a; }
+  .btn-calc { background-color: #d97706; }
+  .btn-export { background-color: #0284c7; }
+  .btn-print { background-color: #15803d; }
+  .btn-reset { background-color: #dc2626; }
+
+  .sheet {
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+  }
+  .header h2 { margin: 0 0 5px 0; font-size: 16px; color: #1e3a8a; }
+
+  .school-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+  }
+  .meta-input {
+    border: none;
+    border-bottom: 1.2px dotted #475569;
+    background: transparent;
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #1e3a8a;
+    outline: none;
+    text-align: center;
+  }
+
+  .section-title {
+    background: #1e3a8a;
+    color: #ffffff;
+    padding: 4px 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    margin: 12px 0 6px 0;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-bottom: 8px;
+  }
+  th, td {
+    border: 1px solid #334155;
+    padding: 3px 2px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 10px;
+  }
+  th { background-color: #f1f5f9; font-weight: 700; }
+  .bg-sub { background-color: #e2e8f0; font-weight: bold; }
+  .bg-total { background-color: #fef08a; font-weight: bold; }
+
+  input.tbl-in {
+    width: 96%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    color: #0f172a;
+    outline: none;
+  }
+
+  /* त्रुटि व सफलता बॉर्डर */
+  .cell-error {
+    background-color: #fee2e2 !important;
+    border: 1.5px solid #dc2626 !important;
+    color: #b91c1c !important;
+  }
+  .neg-val { color: #dc2626 !important; }
+
+  .declaration-box {
+    margin-top: 10px;
+    border: 1px solid #334155;
+    padding: 8px 12px;
+    font-size: 10.5px;
+    background: #f8fafc;
+  }
+  .signatures-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    gap: 15px;
+  }
+
+  @media print {
+    body { background: #ffffff; padding: 0; }
+    .no-print { display: none !important; }
+    .sheet { box-shadow: none; padding: 0; margin: 0; }
+    .meta-input { border-bottom: none !important; color: #000 !important; }
+    input.tbl-in { border: none; background: transparent; }
+    .cell-error { border: 1px solid #dc2626 !important; background: transparent !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <a href="../index.html" class="nav-back">&larr; मुख्य डैशबोर्ड</a>
+  <div class="btn-group">
+    <button class="btn btn-calc" onclick="recalculateAll()">⚡ सम्पूर्ण वार्षिक ऑडिट व गणना</button>
+    <button class="btn btn-save" onclick="saveData()">💾 डेटा सुरक्षित करें</button>
+    <button class="btn btn-export" onclick="exportYearlyCSV()">📊 Excel Export</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ A4 Landscape प्रिंट</button>
+    <button class="btn btn-reset" onclick="resetForm()">🔄 रीसेट</button>
+  </div>
+</div>
+
+<div class="sheet">
+  <div class="header">
+    <h2>पी0एम0 पोषण (एम0डी0एम0) योजनान्तर्गत वार्षिक सूचना प्रपत्र (सत्र 2025-2026)</h2>
+    <div class="school-meta-bar">
+      <span>विद्यालय: <input type="text" id="metaSchool" class="meta-input" value="प्राथमिक विद्यालय धौलरी" style="width: 175px;"></span>
+      <span>|</span>
+      <span>यू-डायस कोड: <input type="text" id="metaUdise" class="meta-input" value="09020201501" style="width: 105px;"></span>
+      <span>|</span>
+      <span>विकास खंड: <input type="text" id="metaBlock" class="meta-input" value="बघरा" style="width: 80px;"></span>
+      <span>|</span>
+      <span>जनपद: <input type="text" id="metaDistrict" class="meta-input" value="मुजफ्फरनगर" style="width: 95px;"> (उ०प्र०)</span>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>1. खाद्यान्न (गेहूं एवं चावल) वार्षिक उपभोग एवं अवशेष विवरण (किग्रा० में)</span>
+    <span style="font-size: 10px; font-weight: normal;">[मानक: 100 ग्राम (0.100 किग्रा) प्रति छात्र - त्रुटि पर बॉक्स लाल होगा]</span>
+  </div>
+  <table id="tblGrain">
+    <thead>
+      <tr>
+        <th rowspan="2" style="width: 11%;">माह व वर्ष</th>
+        <th colspan="2" style="width: 16%;">माह में प्राप्त खाद्यान्न</th>
+        <th colspan="2" style="width: 16%;">माह में खर्च खाद्यान्न</th>
+        <th colspan="2" style="width: 18%;">माह में अवशेष खाद्यान्न</th>
+        <th rowspan="2" style="width: 11%;">कुल अवशेष खाद्यान्न</th>
+        <th rowspan="2" style="width: 11%;">लाभान्वित छात्र संख्या</th>
+        <th rowspan="2" style="width: 17%;">अभ्युक्ति</th>
+      </tr>
+      <tr class="bg-sub">
+        <th style="width: 8%;">गेहूं</th><th style="width: 8%;">चावल</th>
+        <th style="width: 8%;">गेहूं</th><th style="width: 8%;">चावल</th>
+        <th style="width: 9%;">गेहूं</th><th style="width: 9%;">चावल</th>
+      </tr>
+    </thead>
+    <tbody id="grainBody"></tbody>
+  </table>
+
+  <div class="section-title">
+    <span>2. परिवर्तन लागत (Conversion Cost) वार्षिक विवरण (धनराशि ₹ में)</span>
+    <span style="font-size: 10px; font-weight: normal;">[प्राथमिक मानक दर: ₹6.78 प्रति छात्र]</span>
+  </div>
+  <table id="tblCost">
+    <thead>
+      <tr class="bg-sub">
+        <th style="width: 14%;">माह व वर्ष</th>
+        <th style="width: 18%;">माह में प्राप्त धनराशि (₹)</th>
+        <th style="width: 18%;">माह में खर्च धनराशि (₹)</th>
+        <th style="width: 20%;">माह के अंत में अवशेष धनराशि (₹)</th>
+        <th style="width: 15%;">लाभान्वित छात्र संख्या</th>
+        <th style="width: 15%;">अभ्युक्ति</th>
+      </tr>
+    </thead>
+    <tbody id="costBody"></tbody>
+  </table>
+
+  <div class="section-title">
+    <span>3. अतिरिक्त पोषण (फल वितरण) वार्षिक विवरण (धनराशि ₹ में)</span>
+    <span style="font-size: 10px; font-weight: normal;">[मानक दर: ₹4.00 प्रति छात्र - त्रुटि पर बॉक्स लाल होगा]</span>
+  </div>
+  <table id="tblFruit">
+    <thead>
+      <tr class="bg-sub">
+        <th style="width: 12%;">माह व वर्ष</th>
+        <th style="width: 14%;">लाभार्थी बच्चों की संख्या</th>
+        <th style="width: 14%;">गत अवशेष धनराशि (₹)</th>
+        <th style="width: 14%;">प्राप्त धनराशि (₹)</th>
+        <th style="width: 14%;">कुल उपलब्ध धनराशि (₹)</th>
+        <th style="width: 14%;">माह में खर्च धनराशि (₹)</th>
+        <th style="width: 18%;">माह के अंत में अवशेष धनराशि (₹)</th>
+      </tr>
+    </thead>
+    <tbody id="fruitBody"></tbody>
+  </table>
+
+  <div class="declaration-box">
+    <strong>प्रमाणीकरण:</strong> प्रमाणित किया जाता है कि मेरे द्वारा दी गयी उपरोक्त समस्त सूचनाओं का मिलान विद्यालयी एम0डी0एम0 पंजिका एवं बैंक पासबुक से भली-भाँति कर लिया गया है। यदि उपरोक्त सूचना में कोई अंतर अथवा विसंगति पायी जाती है तो उसका पूर्ण उत्तरदायित्व स्वयं मेरा होगा।
+  </div>
+
+  <div class="signatures-grid">
+    <div><br><br>हस्ताक्षर एवं मुहर<br><strong>प्रधानाध्यापक / इंचार्ज अध्यापक</strong><br><input type="text" id="signSchoolBlock" class="meta-input" value="प्रा० वि० धौलरी, बघरा" style="width: 200px;"></div>
+    <div><br><br>हस्ताक्षर एवं मुहर<br><strong>अध्यक्ष, विद्यालय प्रबंध समिति (SMC)</strong><br><input type="text" id="signSmcSchool" class="meta-input" value="प्रा० वि० धौलरी" style="width: 170px;"></div>
+    <div><br><br>हस्ताक्षर एवं मुहर<br><strong>ग्राम प्रधान / सभासद</strong><br>ग्राम पंचायत: <input type="text" id="metaGramPanchayat" class="meta-input" value="धौलरी" style="width: 90px;"></div>
+  </div>
+</div>
+
+<script>
+const defaultGrains = [
+  { m: "गत अवशेष 31 मार्च 2025", rw: 0, rr: 0, cw: 0, cr: 0, bw: -83.902, br: -40.478, tb: -124.380, s: 0, rem: "प्रारंभिक अवशेष" },
+  { m: "अप्रैल 2025", rw: 0, rr: 0, cw: 54.1, cr: 164.7, bw: -138.002, br: -205.178, tb: -343.182, s: 2188, rem: "" },
+  { m: "मई 2025", rw: 0, rr: 0, cw: 50.7, cr: 101.2, bw: -188.702, br: -306.378, tb: -495.080, s: 1519, rem: "" },
+  { m: "जून 2025", rw: 0, rr: 0, cw: 0, cr: 0, bw: -188.702, br: -306.378, tb: -495.080, s: 0, rem: "ग्रीष्मावकाश" },
+  { m: "जुलाई 2025", rw: 0, rr: 348, cw: 57.0, cr: 136.5, bw: -245.702, br: -94.878, tb: -340.580, s: 1935, rem: "चावल आवंटन" },
+  { m: "अगस्त 2025", rw: 524, rr: 212, cw: 76.7, cr: 178.5, bw: 201.598, br: -61.378, tb: 140.220, s: 2552, rem: "खाद्यान्न प्राप्त" },
+  { m: "सितंबर 2025", rw: 0, rr: 0, cw: 72.8, cr: 122.0, bw: 128.798, br: -183.378, tb: -54.580, s: 1948, rem: "" },
+  { m: "अक्टूबर 2025", rw: 0, rr: 0, cw: 53.3, cr: 113.2, bw: 75.498, br: -296.578, tb: -221.080, s: 1665, rem: "" },
+  { m: "नवंबर 2025", rw: 43, rr: 271, cw: 82.0, cr: 157.0, bw: 36.498, br: -182.578, tb: -146.080, s: 2390, rem: "खाद्यान्न प्राप्त" },
+  { m: "दिसंबर 2025", rw: 0, rr: 0, cw: 72.7, cr: 132.1, bw: -36.202, br: -314.678, tb: -350.880, s: 2048, rem: "" },
+  { m: "जनवरी 2026", rw: 0, rr: 0, cw: 28.9, cr: 70.5, bw: -65.102, br: -385.178, tb: -450.280, s: 994, rem: "शीतावकाश" },
+  { m: "फरवरी 2026", rw: 136, rr: 654, cw: 78.8, cr: 156.6, bw: -7.902, br: 112.222, tb: 104.320, s: 2354, rem: "खाद्यान्न प्राप्त" },
+  { m: "मार्च 2026", rw: 0, rr: 0, cw: 62.0, cr: 121.0, bw: -69.902, br: -8.778, tb: -78.680, s: 1830, rem: "" }
+];
+
+const defaultCost = [
+  { m: "गत अवशेष 31 मार्च 2025", r: 0, e: 0, b: -13911.09, s: 0, rem: "प्रारंभिक अवशेष" },
+  { m: "अप्रैल 2025", r: 0, e: 13543.72, b: -27454.81, s: 2188, rem: "" },
+  { m: "मई 2025", r: 0, e: 10298.82, b: -37753.63, s: 1519, rem: "" },
+  { m: "जून 2025", r: 0, e: 0, b: -37753.63, s: 0, rem: "ग्रीष्मावकाश" },
+  { m: "जुलाई 2025", r: 20798.00, e: 13119.30, b: -30074.93, s: 1935, rem: "कन्वर्जन प्राप्त" },
+  { m: "अगस्त 2025", r: 0, e: 17302.56, b: -47377.49, s: 2552, rem: "" },
+  { m: "सितंबर 2025", r: 0, e: 13207.44, b: -60584.93, s: 1948, rem: "" },
+  { m: "अक्टूबर 2025", r: 0, e: 11288.70, b: -71873.63, s: 1665, rem: "" },
+  { m: "नवंबर 2025", r: 63819.00, e: 16204.20, b: -24258.83, s: 2390, rem: "कन्वर्जन प्राप्त" },
+  { m: "दिसंबर 2025", r: 0, e: 13885.44, b: -38144.27, s: 2048, rem: "" },
+  { m: "जनवरी 2026", r: 0, e: 6739.32, b: -44883.59, s: 994, rem: "" },
+  { m: "फरवरी 2026", r: 0, e: 15960.12, b: -60843.71, s: 2354, rem: "" },
+  { m: "मार्च 2026", r: 121414.36, e: 12407.40, b: 48163.25, s: 1830, rem: "कन्वर्जन प्राप्त" }
+];
+
+const defaultFruit = [
+  { m: "गत अवशेष 31 मार्च 2025", s: 0, prev: 24991, r: 0, tot: 24991, e: 0, bal: 24991 },
+  { m: "अप्रैल 2025", s: 467, prev: 24991, r: 0, tot: 24991, e: 1868, bal: 23123 },
+  { m: "मई 2025", s: 316, prev: 23123, r: 0, tot: 23123, e: 1264, bal: 21859 },
+  { m: "जून 2025", s: 0, prev: 21859, r: 0, tot: 21859, e: 0, bal: 21859 },
+  { m: "जुलाई 2025", s: 311, prev: 21859, r: 0, tot: 21859, e: 1244, bal: 20615 },
+  { m: "अगस्त 2025", s: 428, prev: 20615, r: 0, tot: 20615, e: 1712, bal: 18903 },
+  { m: "सितंबर 2025", s: 411, prev: 18903, r: 0, tot: 18903, e: 1644, bal: 17259 },
+  { m: "अक्टूबर 2025", s: 236, prev: 17259, r: 0, tot: 17259, e: 944, bal: 16315 },
+  { m: "नवंबर 2025", s: 400, prev: 16315, r: 8096, tot: 24411, e: 1600, bal: 22811 },
+  { m: "दिसंबर 2025", s: 419, prev: 22811, r: 0, tot: 22811, e: 1676, bal: 21135 },
+  { m: "जनवरी 2026", s: 170, prev: 21135, r: 0, tot: 21135, e: 680, bal: 20455 },
+  { m: "फरवरी 2026", s: 394, prev: 20455, r: 0, tot: 20455, e: 1576, bal: 18879 },
+  { m: "मार्च 2026", s: 400, prev: 18879, r: 6372, tot: 25251, e: 1600, bal: 23651 }
+];
+
+function renderAllTables() {
+  const gBody = document.getElementById('grainBody');
+  gBody.innerHTML = '';
+  defaultGrains.forEach((row, i) => {
+    const isOpening = i === 0;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${row.m}</strong></td>
+      <td><input type="text" class="tbl-in g-rw" value="${row.rw}" ${isOpening ? 'readonly' : ''} oninput="calcGrain()"></td>
+      <td><input type="text" class="tbl-in g-rr" value="${row.rr}" ${isOpening ? 'readonly' : ''} oninput="calcGrain()"></td>
+      <td><input type="text" class="tbl-in g-cw" value="${row.cw}" ${isOpening ? 'readonly' : ''} oninput="calcGrain()"></td>
+      <td><input type="text" class="tbl-in g-cr" value="${row.cr}" ${isOpening ? 'readonly' : ''} oninput="calcGrain()"></td>
+      <td><input type="text" class="tbl-in g-bw ${row.bw < 0 ? 'neg-val' : ''}" value="${row.bw.toFixed(3)}" readonly></td>
+      <td><input type="text" class="tbl-in g-br ${row.br < 0 ? 'neg-val' : ''}" value="${row.br.toFixed(3)}" readonly></td>
+      <td><input type="text" class="tbl-in g-tb ${row.tb < 0 ? 'neg-val' : ''}" value="${row.tb.toFixed(3)}" readonly></td>
+      <td><input type="text" class="tbl-in g-s" value="${row.s}" ${isOpening ? 'readonly' : ''} oninput="calcGrain()"></td>
+      <td><input type="text" class="tbl-in g-rem" value="${row.rem}"></td>
+    `;
+    gBody.appendChild(tr);
+  });
+
+  const gTotal = document.createElement('tr');
+  gTotal.className = 'bg-total';
+  gTotal.innerHTML = `
+    <td>कुल योग</td>
+    <td id="gt_rw">703</td><td id="gt_rr">1485</td>
+    <td id="gt_cw">689.0</td><td id="gt_cr">1453.3</td>
+    <td id="gt_bw" class="neg-val">-69.902</td><td id="gt_br" class="neg-val">-8.778</td>
+    <td id="gt_tb" class="neg-val">-78.680</td>
+    <td id="gt_s">21423</td><td>प्रमाणित</td>
+  `;
+  gBody.appendChild(gTotal);
+
+  const cBody = document.getElementById('costBody');
+  cBody.innerHTML = '';
+  defaultCost.forEach((row, i) => {
+    const isOpening = i === 0;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${row.m}</strong></td>
+      <td><input type="text" class="tbl-in c-r" value="${row.r}" ${isOpening ? 'readonly' : ''} oninput="calcCost()"></td>
+      <td><input type="text" class="tbl-in c-e" value="${row.e}" ${isOpening ? 'readonly' : ''} oninput="calcCost()"></td>
+      <td><input type="text" class="tbl-in c-b ${row.b < 0 ? 'neg-val' : ''}" value="${row.b.toFixed(2)}" readonly></td>
+      <td><input type="text" class="tbl-in c-s" value="${row.s}" ${isOpening ? 'readonly' : ''} oninput="calcCost()"></td>
+      <td><input type="text" class="tbl-in c-rem" value="${row.rem}"></td>
+    `;
+    cBody.appendChild(tr);
+  });
+
+  const cTotal = document.createElement('tr');
+  cTotal.className = 'bg-total';
+  cTotal.innerHTML = `
+    <td>कुल योग</td>
+    <td id="ct_r">206031.36</td><td id="ct_e">143957.02</td>
+    <td id="ct_b">48163.25</td><td id="ct_s">21423</td><td>अंतिम अवशेष</td>
+  `;
+  cBody.appendChild(cTotal);
+
+  const fBody = document.getElementById('fruitBody');
+  fBody.innerHTML = '';
+  defaultFruit.forEach((row, i) => {
+    const isOpening = i === 0;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${row.m}</strong></td>
+      <td><input type="text" class="tbl-in f-s" value="${row.s}" ${isOpening ? 'readonly' : ''} oninput="calcFruit()"></td>
+      <td><input type="text" class="tbl-in f-prev" value="${row.prev}" readonly></td>
+      <td><input type="text" class="tbl-in f-r" value="${row.r}" ${isOpening ? 'readonly' : ''} oninput="calcFruit()"></td>
+      <td><input type="text" class="tbl-in f-tot" value="${row.tot}" readonly></td>
+      <td><input type="text" class="tbl-in f-e" value="${row.e}" ${isOpening ? 'readonly' : ''} oninput="calcFruit()"></td>
+      <td><input type="text" class="tbl-in f-bal" value="${row.bal}" readonly></td>
+    `;
+    fBody.appendChild(tr);
+  });
+
+  const fTotal = document.createElement('tr');
+  fTotal.className = 'bg-total';
+  fTotal.innerHTML = `
+    <td>कुल योग</td>
+    <td id="ft_s">3952</td><td>-</td><td id="ft_r">14468</td><td>-</td><td id="ft_e">15808</td><td id="ft_bal">23651</td>
+  `;
+  fBody.appendChild(fTotal);
+}
+
+function parseNum(val) {
+  if (!val) return 0;
+  const clean = val.toString().replace(/,/g, '').trim();
+  const n = parseFloat(clean);
+  return isNaN(n) ? 0 : n;
+}
+
+// खाद्यान्न गणना व मासिक 100 ग्राम मानक सत्यापन (रेड बॉक्स चेक)
+function calcGrain() {
+  const rows = document.querySelectorAll('#grainBody tr:not(.bg-total)');
+  let currBw = parseNum(rows[0].querySelector('.g-bw').value) || -83.902;
+  let currBr = parseNum(rows[0].querySelector('.g-br').value) || -40.478;
+
+  let totRw = 0, totRr = 0, totCw = 0, totCr = 0, totS = 0;
+
+  for(let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    const rw = parseNum(r.querySelector('.g-rw').value);
+    const rr = parseNum(r.querySelector('.g-rr').value);
+    const cw = parseNum(r.querySelector('.g-cw').value);
+    const cr = parseNum(r.querySelector('.g-cr').value);
+    const s = parseNum(r.querySelector('.g-s').value);
+
+    totRw += rw; totRr += rr; totCw += cw; totCr += cr; totS += s;
+
+    // नियम जांच: व्यय गेहूँ + चावल == छात्र संख्या * 0.100 किग्रा
+    const expectedKg = parseFloat((s * 0.100).toFixed(3));
+    const actualKg = parseFloat((cw + cr).toFixed(3));
+
+    const cwBox = r.querySelector('.g-cw');
+    const crBox = r.querySelector('.g-cr');
+
+    if (s > 0 && Math.abs(actualKg - expectedKg) > 0.005) {
+      cwBox.classList.add('cell-error');
+      crBox.classList.add('cell-error');
+      cwBox.title = `मानक अंतर: अपेक्षित ${expectedKg} kg, दर्ज ${actualKg} kg`;
+      crBox.title = cwBox.title;
+    } else {
+      cwBox.classList.remove('cell-error');
+      crBox.classList.remove('cell-error');
+      cwBox.title = ''; crBox.title = '';
+    }
+
+    currBw = currBw + rw - cw;
+    currBr = currBr + rr - cr;
+    const tb = currBw + currBr;
+
+    const elBw = r.querySelector('.g-bw');
+    const elBr = r.querySelector('.g-br');
+    const elTb = r.querySelector('.g-tb');
+
+    elBw.value = currBw.toFixed(3);
+    elBr.value = currBr.toFixed(3);
+    elTb.value = tb.toFixed(3);
+
+    elBw.className = `tbl-in g-bw ${currBw < 0 ? 'neg-val' : ''}`;
+    elBr.className = `tbl-in g-br ${currBr < 0 ? 'neg-val' : ''}`;
+    elTb.className = `tbl-in g-tb ${tb < 0 ? 'neg-val' : ''}`;
+  }
+
+  document.getElementById('gt_rw').innerText = totRw.toFixed(1);
+  document.getElementById('gt_rr').innerText = totRr.toFixed(1);
+  document.getElementById('gt_cw').innerText = totCw.toFixed(1);
+  document.getElementById('gt_cr').innerText = totCr.toFixed(1);
+  document.getElementById('gt_bw').innerText = currBw.toFixed(3);
+  document.getElementById('gt_br').innerText = currBr.toFixed(3);
+  document.getElementById('gt_tb').innerText = (currBw + currBr).toFixed(3);
+  document.getElementById('gt_s').innerText = totS;
+}
+
+function calcCost() {
+  const rows = document.querySelectorAll('#costBody tr:not(.bg-total)');
+  let currB = parseNum(rows[0].querySelector('.c-b').value) || -13911.09;
+  let totR = 0, totE = 0, totS = 0;
+
+  for(let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    const rec = parseNum(r.querySelector('.c-r').value);
+    const exp = parseNum(r.querySelector('.c-e').value);
+    const s = parseNum(r.querySelector('.c-s').value);
+
+    totR += rec; totE += exp; totS += s;
+    currB = currB + rec - exp;
+
+    const elB = r.querySelector('.c-b');
+    elB.value = currB.toFixed(2);
+    elB.className = `tbl-in c-b ${currB < 0 ? 'neg-val' : ''}`;
+  }
+
+  document.getElementById('ct_r').innerText = totR.toFixed(2);
+  document.getElementById('ct_e').innerText = totE.toFixed(2);
+  document.getElementById('ct_b').innerText = currB.toFixed(2);
+  document.getElementById('ct_s').innerText = totS;
+}
+
+// फल वितरण गणना व ₹4 मानक सत्यापन
+function calcFruit() {
+  const rows = document.querySelectorAll('#fruitBody tr:not(.bg-total)');
+  let currBal = parseNum(rows[0].querySelector('.f-bal').value) || 24991;
+  let totS = 0, totR = 0, totE = 0;
+
+  for(let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    const s = parseNum(r.querySelector('.f-s').value);
+    const rec = parseNum(r.querySelector('.f-r').value);
+    const exp = parseNum(r.querySelector('.f-e').value);
+
+    // फल व्यय सत्यापन: व्यय == छात्र * 4
+    const expBox = r.querySelector('.f-e');
+    if (s > 0 && Math.abs(exp - s * 4) > 0.1) {
+      expBox.classList.add('cell-error');
+      expBox.title = `त्रुटि: ₹4 की दर से व्यय ₹${s * 4} होना चाहिए!`;
+    } else {
+      expBox.classList.remove('cell-error');
+      expBox.title = '';
+    }
+
+    totS += s; totR += rec; totE += exp;
+    r.querySelector('.f-prev').value = currBal;
+    const tot = currBal + rec;
+    r.querySelector('.f-tot').value = tot;
+    currBal = tot - exp;
+    r.querySelector('.f-bal').value = currBal;
+  }
+
+  document.getElementById('ft_s').innerText = totS;
+  document.getElementById('ft_r').innerText = totR;
+  document.getElementById('ft_e').innerText = totE;
+  document.getElementById('ft_bal').innerText = currBal;
+}
+
+function recalculateAll() {
+  calcGrain();
+  calcCost();
+  calcFruit();
+  alert('समस्त 12 माह के खाद्यान्न व फल वितरण की मानक जांच व अवशेष गणना पूर्ण हो गई है!');
+}
+
+function saveData() {
+  const meta = {
+    school: document.getElementById('metaSchool').value,
+    udise: document.getElementById('metaUdise').value,
+    block: document.getElementById('metaBlock').value,
+    district: document.getElementById('metaDistrict').value,
+    gp: document.getElementById('metaGramPanchayat').value,
+    signSchoolBlock: document.getElementById('signSchoolBlock').value,
+    signSmcSchool: document.getElementById('signSmcSchool').value
+  };
+
+  const data = { meta: meta, grain: [], cost: [], fruit: [] };
+
+  document.querySelectorAll('#grainBody tr:not(.bg-total)').forEach(r => {
+    data.grain.push({
+      rw: r.querySelector('.g-rw').value, rr: r.querySelector('.g-rr').value,
+      cw: r.querySelector('.g-cw').value, cr: r.querySelector('.g-cr').value,
+      bw: r.querySelector('.g-bw').value, br: r.querySelector('.g-br').value,
+      tb: r.querySelector('.g-tb').value, s: r.querySelector('.g-s').value,
+      rem: r.querySelector('.g-rem').value
+    });
+  });
+
+  document.querySelectorAll('#costBody tr:not(.bg-total)').forEach(r => {
+    data.cost.push({
+      r: r.querySelector('.c-r').value, e: r.querySelector('.c-e').value,
+      b: r.querySelector('.c-b').value, s: r.querySelector('.c-s').value,
+      rem: r.querySelector('.c-rem').value
+    });
+  });
+
+  document.querySelectorAll('#fruitBody tr:not(.bg-total)').forEach(r => {
+    data.fruit.push({
+      s: r.querySelector('.f-s').value, prev: r.querySelector('.f-prev').value,
+      r: r.querySelector('.f-r').value, tot: r.querySelector('.f-tot').value,
+      e: r.querySelector('.f-e').value, bal: r.querySelector('.f-bal').value
+    });
+  });
+
+  localStorage.setItem('mdm_yearly_2025_26_dholari', JSON.stringify(data));
+  alert('वार्षिक प्रपत्र का विवरण सुरक्षित कर लिया गया है!');
+}
+
+function exportYearlyCSV() {
+  const sch = document.getElementById('metaSchool').value;
+  let csv = `वार्षिक सूचना प्रपत्र सत्र 2025-26 - ${sch}\n\n`;
+  csv += "1. खाद्यान्न विवरण\nमाह,प्राप्त गेहूं,प्राप्त चावल,खर्च गेहूं,खर्च चावल,अवशेष गेहूं,अवशेष चावल,कुल अवशेष,छात्र,अभ्युक्ति\n";
+  document.querySelectorAll('#grainBody tr').forEach(r => {
+    csv += Array.from(r.children).map(c => `"${(c.querySelector('input') ? c.querySelector('input').value : c.innerText).trim()}"`).join(",") + "\n";
+  });
+  const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `MDM_Yearly_Report_2025_26.csv`;
+  link.click();
+}
+
+function resetForm() {
+  if(confirm('क्या आप वार्षिक प्रपत्र को मूल विभागीय डेटा पर रीसेट करना चाहते हैं?')) {
+    localStorage.removeItem('mdm_yearly_2025_26_dholari');
+    renderAllTables();
+    recalculateAll();
+  }
+}
+
+window.onload = function() {
+  renderAllTables();
+  const saved = localStorage.getItem('mdm_yearly_2025_26_dholari');
+  if(saved) {
+    try {
+      const data = JSON.parse(saved);
+      if(data.meta) {
+        if(data.meta.school) document.getElementById('metaSchool').value = data.meta.school;
+        if(data.meta.udise) document.getElementById('metaUdise').value = data.meta.udise;
+        if(data.meta.block) document.getElementById('metaBlock').value = data.meta.block;
+        if(data.meta.district) document.getElementById('metaDistrict').value = data.meta.district;
+        if(data.meta.gp) document.getElementById('metaGramPanchayat').value = data.meta.gp;
+        if(data.meta.signSchoolBlock) document.getElementById('signSchoolBlock').value = data.meta.signSchoolBlock;
+        if(data.meta.signSmcSchool) document.getElementById('signSmcSchool').value = data.meta.signSmcSchool;
+      }
+
+      const gRows = document.querySelectorAll('#grainBody tr:not(.bg-total)');
+      data.grain.forEach((d, i) => {
+        if(gRows[i]) {
+          gRows[i].querySelector('.g-rw').value = d.rw; gRows[i].querySelector('.g-rr').value = d.rr;
+          gRows[i].querySelector('.g-cw').value = d.cw; gRows[i].querySelector('.g-cr').value = d.cr;
+          gRows[i].querySelector('.g-rem').value = d.rem;
+        }
+      });
+
+      const cRows = document.querySelectorAll('#costBody tr:not(.bg-total)');
+      data.cost.forEach((d, i) => {
+        if(cRows[i]) {
+          cRows[i].querySelector('.c-r').value = d.r; cRows[i].querySelector('.c-e').value = d.e;
+          cRows[i].querySelector('.c-rem').value = d.rem;
+        }
+      });
+
+      const fRows = document.querySelectorAll('#fruitBody tr:not(.bg-total)');
+      data.fruit.forEach((d, i) => {
+        if(fRows[i]) {
+          fRows[i].querySelector('.f-s').value = d.s; fRows[i].querySelector('.f-r').value = d.r;
+          fRows[i].querySelector('.f-e').value = d.e;
+        }
+      });
+    } catch(e) {}
+  }
+  recalculateAll();
+};
+</script>
+
+</body>
+</html>
